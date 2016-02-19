@@ -1,0 +1,86 @@
+---
+layout: default
+---
+<a href="#" class="button">Normal</a>
+<button type="button" name="button">pressed</button>
+<input type="submit" name="name" value="ho">
+<input type="button" name="name" value="ho">
+<input type="reset" name="name" value="ho">
+{% capture markdown %}
+``` html
+<input type="text">
+<label>First Name</label><input type="text"><label>First Name</label><label>First Name</label><input type="text"><label>First Name</label><label>First Name</label><input type="text"><label>First Name</label><label>First Name</label><input type="text"><label>First Name</label><label>First Name</label><input type="text"><label>First Name</label><label>First Name</label><input type="text"><label>First Name</label><label>First Name</label><input type="text"><label>First Name</label><label>First Name</label><input type="text"><label>First Name</label>
+```
+{% endcapture %}
+{{ markdown | markdownify }}
+<input type="text">
+<label>First Name</label>
+<input type="password">
+<label>Password</label>
+<input type="email" required>
+<label>Email</label>
+<input type="tel" disabled>
+<label>Phone</label>
+<textarea name="name" rows="8" cols="40"></textarea>
+<label>Description</label>
+<div class="row">
+  <div class="card">
+    <div class="wide media"><img src="https://placehold.it/350x150" alt=""></div>
+    <div class="text">Lorem ipsum dolor sit amet</div>
+  </div>
+  <div class="card">
+    <div class="avatar title">
+      <img src="https://placehold.it/100/100" alt="">
+      <h1>Title</h1>
+      <h2>Subtitle</h2>
+    </div>
+    <div class="wide media"><img src="https://placehold.it/350x150" alt=""></div>
+    <div class="text">lorem ipsum dolor sit amet</div>
+    <div class="actions">
+      <a class="flat button">Action 1</a>
+      <a class="flat button">Action 2</a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="wide media"><img src="https://placehold.it/350x150" alt=""></div>
+    <div class="title">
+      <h1>Title goes here</h1>
+      <h2>Subtitle here</h2>
+    </div>
+    <div class="actions">
+      <a class="button flat">Action 1</a>
+      <a class="button flat">Action 2</a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="wide media"><img src="https://placehold.it/350x150" alt=""></div>
+    <div class="title">
+      <h1>Title goes here</h1>
+      <h2>Subtitle here</h2>
+    </div>
+    <div class="actions">
+      <a class="button flat">Action 1</a>
+      <a class="button flat">Action 2</a>
+    </div>
+    <div class="text">
+      I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing.
+    </div>
+  </div>
+  <div class="card">
+    <div class="title">
+      <h1>Title goes here</h1>
+      <h2>Subtitle here</h2>
+    </div>
+    <div class="actions">
+      <a class="button flat">Action 1</a>
+      <a class="button flat">Action 2</a>
+    </div>
+    <div class="text">
+      I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing.
+    </div>
+  </div>
+</div>
+{% capture markdown %}
+hi this is some *markdown* `text`
+{% endcapture %}
+{{ markdown | markdownify}}

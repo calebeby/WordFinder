@@ -1,0 +1,54 @@
+%text-inputs {
+  font-family: Roboto, sans-serif;
+  padding-top: 37.7px;
+  padding-bottom: 6px;
+  font-size:16px;
+  display:block;
+  border:none;
+  border-bottom: solid 1px #999;
+  @include transition(0.35s ease all);
+  background-color: rgba(255, 255, 255, 0);
+  @include background-image(linear-gradient(to top, $color, $color 2px, rgba(255, 255, 255, 0) 2px));
+  background-position: 50% 0;
+  background-size: 0 100%;
+  background-repeat: no-repeat;
+  color: darken($color, 20%);
+  &.visited:invalid:not(:focus) {
+    background-color: rgba(255, 255, 255, 0);
+    color:red;
+    border-color: red;
+    & + label {
+      color: red;
+    }
+  }
+  &:disabled {
+    border-bottom: dashed 1px gray;
+  }
+  &.empty:not(:focus) + label {
+    top:-21px;
+    font-size:16px;
+  }
+  & + label {
+    margin-bottom: -10px;
+    font-family: Roboto, sans-serif;
+    color:#999;
+    font-weight:normal;
+    position:relative;
+    pointer-events:none;
+    @include transition(0.35s ease all);
+    top:-44px;
+    font-size:12px;
+  }
+  &:required + label::after {
+    content: "*";
+  }
+  &:focus {
+    box-shadow: none;
+    outline: none;
+    background-size: 100% 100%;
+    border-bottom: solid 1px $color;
+    & + label {
+      color: $color;
+    }
+  }
+}
