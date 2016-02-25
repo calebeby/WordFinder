@@ -5,7 +5,7 @@ body {
   margin: 0;
 }
 @import "components/waves";
-.card { @extend %card; }
+.card, .similarWords, .rhymes { @extend %card; }
 #{$all-buttons}, a.button { @extend %buttons; }
 #{$all-text-inputs} { @extend %text-inputs; }
 .highlighter-rouge { @extend %highlight; }
@@ -15,18 +15,18 @@ main {
 
 .row {
   @include span-columns(12);
-  .card {
+  %card {
     @include media($phone) {
-      @include span-columns(4);
-      @include omega(1n);
+      @include span-columns(2);
+      @include omega(2n);
     }
     @include media($tablet) {
       @include span-columns(4);
       @include omega(2n);
     }
     @include media($desktop) {
-      @include span-columns(4);
-      @include omega(3n);
+      @include span-columns(2);
+      @include omega(6n);
     }
   }
 }
