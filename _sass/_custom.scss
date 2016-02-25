@@ -9,6 +9,7 @@ body {
 #{$all-buttons}, a.button { @extend %buttons; }
 #{$all-text-inputs} { @extend %text-inputs; }
 .highlighter-rouge { @extend %highlight; }
+.icon { @extend %icons; }
 main {
   @include outer-container(80%);
 }
