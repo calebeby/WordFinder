@@ -13,6 +13,13 @@ body {
 .definition {
   @extend %card;
 }
+.definition {
+  ol {
+    margin-top: 10px;
+    list-style-type: decimal;
+    padding-left: 16px;
+  }
+}
 #{$all-buttons},
 a.button {
   @extend %buttons;
@@ -61,7 +68,7 @@ main {
         @include span-columns(3);
       }
       @include media($tablet) {
-        @include span-columns(2);
+        @include span-columns(4);
       }
       @include media($phone) {
         @include span-columns(4);
@@ -86,7 +93,7 @@ main {
         @include omega;
       }
       @include media($tablet) {
-        @include span-columns(2);
+        @include span-columns(4);
         @include omega;
       }
       @include media($phone) {

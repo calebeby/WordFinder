@@ -67,16 +67,24 @@ var loadWord = function(query) {
     }
   });
   $.ajax({
-    url: 'http://api.wordnik.com:80/v4/word.json/' + query + "/definitions?limit=1&includeRelated=false&sourceDictionaries=century&useCanonical=true&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+    url: 'https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + query,
     type: 'get',
     dataType: 'json',
     cache: true,
     success: function(data) {
-      var $list = [];
-      $(data).each(function(index, value) {
-        $list.push("<p>"+value.text+"</p>");
+      var $list;
+      $list = [];
+      $(data.results).each(function(index, value) {
+        var partOfSpeech = value.part_of_speech
+        $(value.senses).each(function(index, value) {
+          $(value.definition).each(function(index, value) {
+            $list.push("<li><p><em>" + partOfSpeech + "</em> " + value + "</p></li>");
+          })
+        });
       });
-      $(".definition .text").html($list);
+      // TODO: fix the double running and two ol appearing
+      $(".definition .text").append("<ol></ol>");
+      $(".definition .text ol").html($list);
     }
   });
 };
