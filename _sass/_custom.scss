@@ -17,6 +17,10 @@ body {
 a.button {
   @extend %buttons;
 }
+header {
+  width: 100%;
+  position: fixed;
+}
 input[type="search"] {
   @extend %search;
   left: 0;
@@ -25,7 +29,6 @@ input[type="search"] {
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
-  position: fixed;
   &:focus {
     min-width: 80%;
   }

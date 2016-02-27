@@ -67,7 +67,7 @@ var loadWord = function(query) {
     }
   });
   $.ajax({
-    url: 'https://api.wordnik.com:80/v4/word.json/' + query + "/definitions?limit=1&includeRelated=false&sourceDictionaries=century&useCanonical=true&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+    url: 'http://api.wordnik.com:80/v4/word.json/' + query + "/definitions?limit=1&includeRelated=false&sourceDictionaries=century&useCanonical=true&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
     type: 'get',
     dataType: 'json',
     cache: true,
