@@ -85,7 +85,7 @@ $(document).ready(function() {
 });
 $(".searchbox").pressEnter(function() {
   if (currentQuery != $(this).val()) {
-    loadWord($(this).val());
+    window.location.hash = "#" + $(this).val();
   }
 });
 window.onhashchange = function() {
