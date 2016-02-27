@@ -1,33 +1,94 @@
-$phone:new-breakpoint(max-width 480px, $total-columns: 4);
-$tablet:new-breakpoint(min-width 480px max-width 840px, $total-columns: 8);
-$desktop:new-breakpoint(min-width 840px, $total-columns: 12);
+$phone: new-breakpoint(max-width 480px, $total-columns: 4);
+$tablet: new-breakpoint(min-width 480px max-width 840px, $total-columns: 8);
+$desktop: new-breakpoint(min-width 840px, $total-columns: 12);
+$visual-grid: true !global;
+$visual-grid-color: lighten(#FFF0E8, 3%);
+$visual-grid-opacity: 0.4;
 body {
   margin: 0;
 }
 @import "components/waves";
-.card, .similarWords, .rhymes { @extend %card; }
-#{$all-buttons}, a.button { @extend %buttons; }
-#{$all-text-inputs} { @extend %text-inputs; }
+.similarWords,
+.rhymes,
+.definition {
+  @extend %card;
+}
+#{$all-buttons},
+a.button {
+  @extend %buttons;
+}
+input[type="search"] {
+  @extend %search;
+  left: 0;
+  right: 0;
+  min-width: 40%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  position: fixed;
+  &:focus {
+    min-width: 80%;
+  }
+}
+input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+textarea {
+  @extend %text-inputs;
+}
 .highlighter-rouge { @extend %highlight; }
 .icon { @extend %icons; }
 main {
-  @include outer-container(80%);
-}
-
-.row {
-  @include span-columns(12);
-  %card {
-    @include media($phone) {
-      @include span-columns(2);
-      @include omega(2n);
+  .row {
+    padding-top: 50px;
+    @include outer-container(80%);
+    .left {
+      @include pad();
+      @include media($desktop) {
+        @include span-columns(3);
+      }
+      @include media($tablet) {
+        @include span-columns(2);
+      }
+      @include media($phone) {
+        @include span-columns(4);
+      }
     }
-    @include media($tablet) {
-      @include span-columns(4);
-      @include omega(2n);
+    .center {
+      @include pad();
+      @include media($desktop) {
+        @include span-columns(6);
+      }
+      @include media($tablet) {
+        @include span-columns(4);
+      }
+      @include media($phone) {
+        @include span-columns(4);
+      }
     }
-    @include media($desktop) {
-      @include span-columns(2);
-      @include omega(6n);
+    .right {
+      @include pad();
+      @include media($desktop) {
+        @include span-columns(3);
+        @include omega;
+      }
+      @include media($tablet) {
+        @include span-columns(2);
+        @include omega;
+      }
+      @include media($phone) {
+        @include span-columns(4);
+      }
     }
   }
 }
