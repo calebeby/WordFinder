@@ -22,9 +22,13 @@ $(function() {
   });
 });
 var switchWordTo = function(word) {
-  currentQuery = word;
-  $(".searchbox").val(word);
-  loadWord(word);
+  if (word != "") {
+    currentQuery = word;
+    $(".searchbox").val(word);
+    loadWord(word);
+  } else {
+    $(".similarWords .text, .rhymes .text, .definition .text").empty();
+  }
 }
 $.fn.pressEnter = function(fn) {
   return this.each(function() {
@@ -38,36 +42,39 @@ $.fn.pressEnter = function(fn) {
 };
 var loadWord = function(query) {
   currentQuery = query;
+  $(".searchbox").removeClass("startup")
+  $(".definition, .similarWords, .rhymes").css({ marginTop:200, opacity:0 });
   //similarWords
   $.ajax({
-    url: 'https://api.datamuse.com/words?ml=' + query +"&max=10",
+    url: 'https://api.datamuse.com/words?ml=' + query + "&max=10",
     type: 'get',
     dataType: 'json',
     cache: true,
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push("<p><a href='#"+value.word+"'>"+value.word+"</p>");
+        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</p>");
       });
       $(".similarWords .text").html($list);
+      $(".similarWords").css({marginTop:0, opacity:100});
     }
   });
-  //rhymes
   $.ajax({
-    url: 'https://api.datamuse.com/words?rel_rhy=' + query.split(" ").pop() +"&max=10",
+    url: 'https://api.datamuse.com/words?rel_rhy=' + query.split(" ").pop() + "&max=10",
     type: 'get',
     dataType: 'json',
     cache: true,
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push("<p><a href='#"+value.word+"'>"+value.word+"</p>");
+        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</p>");
       });
       $(".rhymes .text").html($list);
+      $(".rhymes").css({marginTop:0, opacity:100});
     }
   });
   $.ajax({
-    url: 'https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + query,
+    url: 'https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + query + "&limit=5",
     type: 'get',
     dataType: 'json',
     cache: true,
@@ -83,19 +90,35 @@ var loadWord = function(query) {
         });
       });
       // TODO: fix the double running and two ol appearing
-      $(".definition .text").append("<ol></ol>");
+      $(".definition .text").html("<ol></ol>");
       $(".definition .text ol").html($list);
+      $(".definition").css({marginTop:0, opacity:100});
     }
   });
 };
 $(document).ready(function() {
-   switchWordTo(window.location.hash.substring(1));
-});
-$(".searchbox").pressEnter(function() {
-  if (currentQuery != $(this).val()) {
-    window.location.hash = "#" + $(this).val();
+  var url = window.location.hash.substring(1)
+  if (url != "") {
+    switchWordTo(url);
+  } else {
+    $(".searchbox").addClass("startup");
+    $(".definition, .similarWords, .rhymes").css({display:"none"});
   }
 });
+$(".searchbox").on("focus", function() {
+  $(".definition, .similarWords, .rhymes").css({display:"block"});
+  $(".definition, .similarWords, .rhymes").css({ marginTop:200, opacity:0 });
+})
+$(".searchbox").pressEnter(function() {
+  $(this).blur();
+});
+$(".searchbox").blur(function(){
+  if (currentQuery != $(this).val()) {
+    window.location.hash = "#" + $(this).val();
+  } else {
+    $(".definition, .similarWords, .rhymes").css({ marginTop:0, opacity:100 });
+  }
+})
 window.onhashchange = function() {
   switchWordTo(window.location.hash.substring(1));
 };
