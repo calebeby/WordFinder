@@ -83,9 +83,9 @@ var loadWord = function(query) {
   //slide down and out
   $($allCards).css({ marginTop:200, opacity:0 });
   var relatedWords = [];
-  console.log(getRelatedWords(query, 10));
+  var words = getRelatedWords(query, 10);
+  console.log(words);
   $.each(getRelatedWords(query, 10), function(index, value) {
-    console.log(index + ":" + value);
     relatedWords.push("<p><a href='#" + value + "'>" + value + "</a></p>");
     console.log(relatedWords);
   });
