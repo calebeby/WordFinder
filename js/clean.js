@@ -112,6 +112,7 @@ $(".searchbox").pressEnter(function() {
 $(".searchbox").blur(function() {
   loadWord($(".searchbox").val());
 })
+
 window.onhashchange = function() {
   switchWordTo(window.location.hash.substring(1)
     .split("+").join(" ")
