@@ -21,10 +21,9 @@ var getRelatedWords = function(query, limit) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push(value.word);
+        $list.push("<p><a href='#" + value + "'>" + value + "</a></p>");
       });
-      console.log($list);
-      return $list[1];
+      $(".relatedWords").html($list).css({ marginTop:0, opacity:100 });
     }
   });
 }
@@ -37,9 +36,9 @@ var getSimilarSoundingWords = function(query, limit) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push(value.word);
+        $list.push("<p><a href='#" + value + "'>" + value + "</a></p>");
       });
-      return $list;
+      $(".soundsLike").html($list).css({ marginTop:0, opacity:100 });
     }
   });
 }
@@ -52,15 +51,15 @@ var getRhymingWords = function(query, limit) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push(value.word);
+        $list.push("<p><a href='#" + value + "'>" + value + "</a></p>");
       });
-      return $list;
+      $(".rhymes").html($list).css({ marginTop:0, opacity:100 });
     }
   });
 }
 var getDefinition = function(query, limit) {
   $.ajax({
-    url: 'https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + query + "&limit=5",
+    url: 'https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + query + "&limit=" + limit,
     type: 'get',
     dataType: 'json',
     cache: true,
@@ -71,10 +70,13 @@ var getDefinition = function(query, limit) {
         var partOfSpeech = value.part_of_speechcds
         $(value.senses).each(function(index, value) {
           $(value.definition).each(function(index, value) {
-            $list.push({"partOfSpeech":partOfSpeech,"definition":value});
+            $list.push("<li><p><em>" + partOfSpeech + "</em> " + value + "</p></li>");
           })
         });
       });
+      $(".definition .text").html("<ol></ol>");
+      $(".definition .text ol").html($list);
+      $(".definition").css({marginTop:0, opacity:100});
     }
   });
 }
@@ -82,14 +84,11 @@ var loadWord = function(query) {
   currentQuery = query;
   //slide down and out
   $($allCards).css({ marginTop:200, opacity:0 });
-  var relatedWords = [];
-  var words = getRelatedWords(query, 10);
-  console.log(words);
-  $.each(getRelatedWords(query, 10), function(index, value) {
-    relatedWords.push("<p><a href='#" + value + "'>" + value + "</a></p>");
-    console.log(relatedWords);
-  });
-  $(".relatedWords").html(relatedWords).css({ marginTop:0, opacity:100 });
+  getRelatedWords(query, 10);
+  getSimilarSoundingWords(query, 10);
+  getRhymingWords(query, 10);
+  getDefinition(query, 10);
+
 }
 $.fn.pressEnter = function(fn) {
   return this.each(function() {
