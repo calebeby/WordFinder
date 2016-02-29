@@ -42,6 +42,7 @@ var getSimilarSoundingWords = function(query, limit) {
       });
       $(".soundsLike .text").html("<p>" + $list.join(", ") + "</p>")
       $(".soundsLike").css({ marginTop:0, opacity:100 });
+      console.log("up to date");
     }
   });
 }
