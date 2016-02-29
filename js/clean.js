@@ -6,7 +6,7 @@ var switchWordTo = function(query) {
     $(".searchbox").val(query);
     loadWord(query);
   } else { //is blank, so go to reset mode
-
+    
   }
 }
 var goHome = function() {
@@ -103,3 +103,9 @@ $.fn.pressEnter = function(fn) {
 $(".searchbox").pressEnter(function(){
   loadWord($(".searchbox").val());
 })
+window.onhashchange = function() {
+  switchWordTo(window.location.hash.substring(1)
+    .split("+").join(" ")
+    .split("%20").join(" ")
+  );
+};
