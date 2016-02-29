@@ -2,7 +2,7 @@ var currentQuery;
 var $cache = true;
 var $allCards = ".soundsLike, .definition, .relatedWords, .rhymes"
 var switchWordTo = function(query) {
-  if (word != "") { //if it is not blank, load it
+  if (query != "") { //if it is not blank, load it
     $(".searchbox").val(query);
     loadWord(query);
   } else { //is blank, so go to reset mode
