@@ -106,7 +106,10 @@ $.fn.pressEnter = function(fn) {
     })
   });
 };
-$(".searchbox").pressEnter(function(){
+$(".searchbox").pressEnter(function() {
+  $(this).blur();
+});
+$(".searchbox").blur(function() {
   loadWord($(".searchbox").val());
 })
 window.onhashchange = function() {
