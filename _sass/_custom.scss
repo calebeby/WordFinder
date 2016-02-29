@@ -8,11 +8,21 @@ body {
   margin: 0;
 }
 @import "components/waves";
-.similarWords,
+.relatedWords,
 .rhymes,
-.definition {
+.definition,
+.soundsLike {
+  @include span-columns(12);
+  @include pad();
   @extend %card;
   @include transition(0.35s ease all);
+}
+a {
+  color: #03a9f4;
+  text-decoration: none;
+  &:visited {
+    color: lighten(#03a9f4, 30%);
+  }
 }
 .definition {
   ol {

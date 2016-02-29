@@ -1,33 +1,12 @@
-Waves.attach('.button:not(.flat)', 'waves-light');
-Waves.attach('.button.flat', 'waves-dark');
-Waves.attach('button', 'waves-light');
-Waves.init();
 var currentQuery;
-var $textInput = 'input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"],textarea';
-$(function() {
-  $($textInput).each(function() {
-    if ($(this).val() === "") {
-      $(this).addClass('empty');
-    }
-  });
-  $($textInput).focus(function() {
-    $(this).addClass('visited');
-  });
-  $($textInput).on('change keyup keydown paste keypress', function() {
-    if ($(this).val() === '') {
-      $($(this)).addClass('empty');
-    } else {
-      $($(this)).removeClass('empty');
-    }
-  });
-});
+var $allCards = ".soundsLike, .definition, .relatedWords, .rhymes"
 var switchWordTo = function(word) {
   if (word != "") {
     currentQuery = word;
     $(".searchbox").val(word);
     loadWord(word);
   } else {
-    $(".similarWords .text, .rhymes .text, .definition .text").empty();
+    $(".relatedWords .text, .rhymes .text, .definition .text").empty();
   }
 }
 $.fn.pressEnter = function(fn) {
@@ -43,8 +22,8 @@ $.fn.pressEnter = function(fn) {
 var loadWord = function(query) {
   currentQuery = query;
   $(".searchbox").removeClass("startup")
-  $(".definition, .similarWords, .rhymes").css({ marginTop:200, opacity:0 });
-  //similarWords
+  $($allCards).css({ marginTop:200, opacity:0 });
+  //relatedWords
   $.ajax({
     url: 'https://api.datamuse.com/words?ml=' + query + "&max=10",
     type: 'get',
@@ -53,10 +32,25 @@ var loadWord = function(query) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</p>");
+        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
-      $(".similarWords .text").html($list);
-      $(".similarWords").css({marginTop:0, opacity:100});
+      $(".relatedWords .text").html($list);
+      $(".relatedWords").css({marginTop:0, opacity:100});
+    }
+  });
+  //similar sounding
+  $.ajax({
+    url: 'https://api.datamuse.com/words?sl=' + query + "&max=15",
+    type: 'get',
+    dataType: 'json',
+    cache: true,
+    success: function(data) {
+      var $list = [];
+      $(data).each(function(index, value) {
+        $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
+      });
+      $(".soundsLike .text").html("<p>" + $list.join(", ") + "</p>");
+      $(".soundsLike").css({marginTop:"25px", opacity:100});
     }
   });
   $.ajax({
@@ -67,7 +61,7 @@ var loadWord = function(query) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</p>");
+        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
       $(".rhymes .text").html($list);
       $(".rhymes").css({marginTop:0, opacity:100});
@@ -82,14 +76,13 @@ var loadWord = function(query) {
       var $list;
       $list = [];
       $(data.results).each(function(index, value) {
-        var partOfSpeech = value.part_of_speech
+        var partOfSpeech = value.part_of_speechcds
         $(value.senses).each(function(index, value) {
           $(value.definition).each(function(index, value) {
             $list.push("<li><p><em>" + partOfSpeech + "</em> " + value + "</p></li>");
           })
         });
       });
-      // TODO: fix the double running and two ol appearing
       $(".definition .text").html("<ol></ol>");
       $(".definition .text ol").html($list);
       $(".definition").css({marginTop:0, opacity:100});
@@ -97,28 +90,40 @@ var loadWord = function(query) {
   });
 };
 $(document).ready(function() {
-  var url = window.location.hash.substring(1)
+  var url = window.location.hash.substring(1).split("+").split("%20").join(" ");
   if (url != "") {
     switchWordTo(url);
   } else {
     $(".searchbox").addClass("startup");
-    $(".definition, .similarWords, .rhymes").css({display:"none"});
+    $(".row").css({display:"none"});
   }
 });
 $(".searchbox").on("focus", function() {
-  $(".definition, .similarWords, .rhymes").css({display:"block"});
-  $(".definition, .similarWords, .rhymes").css({ marginTop:200, opacity:0 });
+  $(".row").css({display:"block"});
+  $($allCards).css({ marginTop:200, opacity:0 });
 })
 $(".searchbox").pressEnter(function() {
   $(this).blur();
+$(document).ready(function() {
+  var url = window.location.hash.substring(1).split("+").split("%20").join(" ");
+  if (url != "") {
+    switchWordTo(url);
+  } else {
+    $(".searchbox").addClass("startup");
+    $(".row").css({display:"none"});
+  }
+});
+$(".searchbox").on("focus", function() {
+  $(".row").css({display:"block"});
 });
 $(".searchbox").blur(function(){
   if (currentQuery != $(this).val()) {
     window.location.hash = "#" + $(this).val();
   } else {
-    $(".definition, .similarWords, .rhymes").css({ marginTop:0, opacity:100 });
+    $($allCards).css({ marginTop:0, opacity:100 });
+    $(".soundsLike").css({ marginTop:"25px" });
   }
 })
 window.onhashchange = function() {
-  switchWordTo(window.location.hash.substring(1));
+  switchWordTo(window.location.hash.substring(1).split("+").split("%20").join(" "));
 };
