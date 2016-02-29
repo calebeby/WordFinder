@@ -23,6 +23,7 @@ var getRelatedWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push(value.word);
       });
+      console.log($list);
       return $list;
     }
   });
