@@ -6,7 +6,7 @@ var switchWordTo = function(query) {
     $(".searchbox").val(query);
     loadWord(query);
   } else { //is blank, so go to reset mode
-    
+
   }
 }
 var goHome = function() {
@@ -23,7 +23,7 @@ var getRelatedWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
-      $(".relatedWords").html($list).css({ marginTop:0, opacity:100 });
+      $(".relatedWords .text").html($list).css({ marginTop:0, opacity:100 });
     }
   });
 }
@@ -38,7 +38,7 @@ var getSimilarSoundingWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
-      $(".soundsLike").html($list).css({ marginTop:0, opacity:100 });
+      $(".soundsLike .text").html($list).css({ marginTop:0, opacity:100 });
     }
   });
 }
@@ -53,7 +53,7 @@ var getRhymingWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
-      $(".rhymes").html($list).css({ marginTop:0, opacity:100 });
+      $(".rhymes .text").html($list).css({ marginTop:0, opacity:100 });
     }
   });
 }
@@ -66,6 +66,7 @@ var getDefinition = function(query, limit) {
     success: function(data) {
       var $list;
       $list = [];
+      console.log(data);
       $(data.results).each(function(index, value) {
         var partOfSpeech = value.part_of_speechcds
         $(value.senses).each(function(index, value) {
