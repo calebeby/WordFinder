@@ -24,7 +24,7 @@ var getRelatedWords = function(query, limit) {
         $list.push(value.word);
       });
       console.log($list);
-      return $list;
+      return $list[1];
     }
   });
 }
