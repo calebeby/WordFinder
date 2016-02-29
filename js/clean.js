@@ -38,9 +38,9 @@ var getSimilarSoundingWords = function(query, limit) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
+        $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
       });
-      $(".soundsLike .text").html($list)
+      $(".soundsLike .text").html("<p>" + $list.join(", ") + "</p>")
       $(".soundsLike").css({ marginTop:0, opacity:100 });
     }
   });
