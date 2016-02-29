@@ -73,7 +73,7 @@ var getDefinition = function(query, limit) {
       $list = [];
       console.log(data);
       $(data.results).each(function(index, value) {
-        var partOfSpeech = value.part_of_speech
+        var partOfSpeech = value.part_of_speech;
         $(value.senses).each(function(index, value) {
           $(value.definition).each(function(index, value) {
             $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.word + "</p></li>");
