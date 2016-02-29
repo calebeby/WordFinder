@@ -85,7 +85,7 @@ var loadWord = function(query) {
   var relatedWords = [];
   console.log(getRelatedWords(query, 10));
   $.each(getRelatedWords(query, 10), function(index, value) {
-    console.log(value);
+    console.log(index + ":" + value);
     relatedWords.push("<p><a href='#" + value + "'>" + value + "</a></p>");
     console.log(relatedWords);
   });
