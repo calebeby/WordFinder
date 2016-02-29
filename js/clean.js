@@ -21,7 +21,7 @@ var getRelatedWords = function(query, limit) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push("<p><a href='#" + value + "'>" + value + "</a></p>");
+        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
       $(".relatedWords").html($list).css({ marginTop:0, opacity:100 });
     }
@@ -36,7 +36,7 @@ var getSimilarSoundingWords = function(query, limit) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push("<p><a href='#" + value + "'>" + value + "</a></p>");
+        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
       $(".soundsLike").html($list).css({ marginTop:0, opacity:100 });
     }
@@ -51,7 +51,7 @@ var getRhymingWords = function(query, limit) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push("<p><a href='#" + value + "'>" + value + "</a></p>");
+        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
       $(".rhymes").html($list).css({ marginTop:0, opacity:100 });
     }
@@ -70,7 +70,7 @@ var getDefinition = function(query, limit) {
         var partOfSpeech = value.part_of_speechcds
         $(value.senses).each(function(index, value) {
           $(value.definition).each(function(index, value) {
-            $list.push("<li><p><em>" + partOfSpeech + "</em> " + value + "</p></li>");
+            $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.word + "</p></li>");
           })
         });
       });
