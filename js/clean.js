@@ -5,6 +5,7 @@ var switchWordTo = function(query) {
   if (query != "") { //if it is not blank, load it
     $(".searchbox").val(query);
     loadWord(query);
+    window.location.hash = query;
   } else { //is blank, so go to reset mode
 
   }
@@ -23,7 +24,8 @@ var getRelatedWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
-      $(".relatedWords .text").html($list).css({ marginTop:0, opacity:100 });
+      $(".relatedWords .text").html($list)
+      $(".relatedWords").css({ marginTop:0, opacity:100 });
     }
   });
 }
@@ -38,7 +40,8 @@ var getSimilarSoundingWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
-      $(".soundsLike .text").html($list).css({ marginTop:0, opacity:100 });
+      $(".soundsLike .text").html($list)
+      $(".soundsLike").css({ marginTop:0, opacity:100 });
     }
   });
 }
@@ -53,7 +56,8 @@ var getRhymingWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
-      $(".rhymes .text").html($list).css({ marginTop:0, opacity:100 });
+      $(".rhymes .text").html($list)
+      $(".rhymes").css({ marginTop:0, opacity:100 });
     }
   });
 }
