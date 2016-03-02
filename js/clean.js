@@ -148,19 +148,19 @@ window.onhashchange = function() {
 };
 $(".relatedWords .button").on("click", function(){
   $(".relatedWords").css({ marginTop:200, opacity:0, visibility:"hidden" });
-  getRelatedWords(query, 50);
+  getRelatedWords(currentQuery, 50);
 })
 $(".definition .button").on("click", function(){
   $(".definition").css({ marginTop:200, opacity:0, visibility:"hidden" });
-  getDefinition(query, 50);
+  getDefinition(currentQuery, 50);
 })
 $(".soundsLike .button").on("click", function(){
   $(".soundsLike").css({ marginTop:200, opacity:0, visibility:"hidden" });
-  getSimilarSoundingWords(query, 50);
+  getSimilarSoundingWords(currentQuery, 50);
 })
 $(".rhymes .button").on("click", function(){
   $(".rhymes").css({ marginTop:200, opacity:0, visibility:"hidden" });
-  getRhymingWords(query, 50);
+  getRhymingWords(currentQuery, 50);
 })
 $(document).ready(function() {
   switchWordTo(window.location.hash.substring(1));
