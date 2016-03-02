@@ -39,7 +39,7 @@ var getRelatedWords = function(query, limit) {
         $(".relatedWords .text").html($list)
         $(".relatedWords").removeAttr("style");
       } else {
-        $(".relatedWords .text").html("No related words could be found");
+        $(".relatedWords .text").html("Can't find related words");
         $(".relatedWords").removeAttr("style");
       }
     }
@@ -60,7 +60,7 @@ var getSimilarSoundingWords = function(query, limit) {
         $(".soundsLike .text").html("<p>" + $list.join(", ") + "</p>")
         $(".soundsLike").removeAttr("style");
       } else {
-        $(".soundsLike .text").html("Unable to find similar-sounding words");
+        $(".soundsLike .text").html("Can't find find similar-sounding words");
         $(".soundsLike").removeAttr("style");
       }
     }
@@ -83,7 +83,7 @@ var getRhymingWords = function(query, limit) {
         $(".rhymes .text").html($list)
         $(".rhymes").removeAttr("style");
       } else {
-        $(".rhymes .text").html("Unable to find rhyming words")
+        $(".rhymes .text").html("Can't find find rhyming words")
         $(".rhymes").removeAttr("style");
       }
     }
@@ -109,7 +109,7 @@ var getDefinition = function(query, limit) {
         $(".definition .text ol").html($list);
         $(".definition").removeAttr("style");
       } else {
-        $(".definition .text").html("Unable to find definitions");
+        $(".definition .text").html("Can't find definitions");
         $(".definition").removeAttr("style");
       }
     }
@@ -146,6 +146,22 @@ $(".searchbox").blur(function() {
 window.onhashchange = function() {
   switchWordTo(window.location.hash.substring(1));
 };
+$(".relatedWords .button").on("click", function(){
+  $(".relatedWords").css({ marginTop:200, opacity:0, visibility:"hidden" });
+  getRelatedWords(query, 50);
+})
+$(".definition .button").on("click", function(){
+  $(".definition").css({ marginTop:200, opacity:0, visibility:"hidden" });
+  getDefinition(query, 50);
+})
+$(".soundsLike .button").on("click", function(){
+  $(".soundsLike").css({ marginTop:200, opacity:0, visibility:"hidden" });
+  getSimilarSoundingWords(query, 50);
+})
+$(".rhymes .button").on("click", function(){
+  $(".rhymes").css({ marginTop:200, opacity:0, visibility:"hidden" });
+  getRhymingWords(query, 50);
+})
 $(document).ready(function() {
   switchWordTo(window.location.hash.substring(1));
 });
