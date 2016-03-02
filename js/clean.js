@@ -78,6 +78,8 @@ var getRhymingWords = function(query, limit) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
       if ($list !== []) {
+        console.log($list !== []);
+        console.log($list);
         $(".rhymes .text").html($list)
         $(".rhymes").removeAttr("style");
       } else {
@@ -102,8 +104,7 @@ var getDefinition = function(query, limit) {
         var partOfSpeech = value.part_of_speech;
         $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.senses[0].definition + "</p></li>");
       });
-      console.log($list);
-      if ($(data.results) != []) {
+      if ($list !== []) {
         $(".definition .text").html("<ol></ol>");
         $(".definition .text ol").html($list);
         $(".definition").removeAttr("style");
