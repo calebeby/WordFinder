@@ -1,13 +1,23 @@
+Waves.attach('.button.flat', 'waves-dark');
+Waves.init();
 var currentQuery;
 var $cache = true;
 var $allCards = ".soundsLike, .definition, .relatedWords, .rhymes"
 var switchWordTo = function(query) {
-  if (query != "") { //if it is not blank, load it
-    $(".searchbox").val(query);
-    loadWord(query);
-    window.location.hash = query;
+  window.scrollTo(0, 0);
+  if (query != "") { //if it is not blank
+    query = query
+    .split("+").join(" ")
+    .split("%20").join(" ");
+    if (query !== currentQuery) {
+      $(".searchbox").val(query);
+      loadWord(query);
+      window.location.hash = query;
+      currentQuery = query;
+    } else { //the query is the same as it was last time, so show the data
+      $($allCards).removeAttr("style");
+    }
   } else { //is blank, so go to reset mode
-
   }
 }
 var goHome = function() {
@@ -25,7 +35,7 @@ var getRelatedWords = function(query, limit) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
       $(".relatedWords .text").html($list)
-      $(".relatedWords").css({ marginTop:0, opacity:100 });
+      $(".relatedWords").removeAttr("style");
     }
   });
 }
@@ -41,7 +51,7 @@ var getSimilarSoundingWords = function(query, limit) {
         $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
       });
       $(".soundsLike .text").html("<p>" + $list.join(", ") + "</p>")
-      $(".soundsLike").css({ marginTop:0, opacity:100 });
+      $(".soundsLike").removeAttr("style");
       console.log("up to date");
     }
   });
@@ -58,7 +68,7 @@ var getRhymingWords = function(query, limit) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
       $(".rhymes .text").html($list)
-      $(".rhymes").css({ marginTop:0, opacity:100 });
+      $(".rhymes").removeAttr("style");
     }
   });
 }
@@ -71,25 +81,21 @@ var getDefinition = function(query, limit) {
     success: function(data) {
       var $list;
       $list = [];
-      console.log(data);
+      //each result
       $(data.results).each(function(index, value) {
+        //get part of speech
         var partOfSpeech = value.part_of_speech;
-        $(value.senses).each(function(index, value) {
-          $(value.definition).each(function(index, value) {
-            $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.word + "</p></li>");
-          })
-        });
+        $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.senses[0].definition/*[0]*/ + "</p></li>");
       });
       $(".definition .text").html("<ol></ol>");
       $(".definition .text ol").html($list);
-      $(".definition").css({marginTop:0, opacity:100});
+      $(".definition").removeAttr("style");
     }
   });
 }
 var loadWord = function(query) {
-  currentQuery = query;
   //slide down and out
-  $($allCards).css({ marginTop:200, opacity:0 });
+  $($allCards).css({ marginTop:200, opacity:0, visibility:"hidden" });
   getRelatedWords(query, 10);
   getSimilarSoundingWords(query, 10);
   getRhymingWords(query, 10);
@@ -106,16 +112,19 @@ $.fn.pressEnter = function(fn) {
     })
   });
 };
+$(".searchbox").focus(function() {
+  $($allCards).css({ marginTop:200, opacity:0, visibility:"hidden" });
+});
 $(".searchbox").pressEnter(function() {
   $(this).blur();
 });
 $(".searchbox").blur(function() {
-  loadWord($(".searchbox").val());
-})
-
+  switchWordTo($(".searchbox").val());
+});
 window.onhashchange = function() {
-  switchWordTo(window.location.hash.substring(1)
-    .split("+").join(" ")
-    .split("%20").join(" ")
-  );
+  switchWordTo(window.location.hash.substring(1));
 };
+$(document).ready(function() {
+  switchWordTo(window.location.hash.substring(1));
+  currentQuery = window.location.hash.substring(1);
+});

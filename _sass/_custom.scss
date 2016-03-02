@@ -8,6 +8,7 @@ body {
   margin: 0;
 }
 @import "components/waves";
+
 .relatedWords,
 .rhymes,
 .definition,
@@ -16,6 +17,9 @@ body {
   @include pad();
   @extend %card;
   @include transition(0.35s ease all);
+}
+.soundsLike {
+  margin-top: 20px;
 }
 a {
   color: #03a9f4;
@@ -49,7 +53,9 @@ input[type="search"] {
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
+  z-index: 8;
   &:focus {
+    z-index: 8;
     min-width: 80%;
     @include calc(margin-top, "50vh - 19px");
   }
@@ -80,7 +86,7 @@ main {
     padding-top: 50px;
     @include outer-container(80%);
     .left {
-      @include pad();
+      margin-top: 20px;
       @include media($desktop) {
         @include span-columns(3);
       }
@@ -93,7 +99,7 @@ main {
       }
     }
     .center {
-      @include pad();
+      margin-top: 20px;
       @include media($desktop) {
         @include span-columns(6);
       }
@@ -107,7 +113,7 @@ main {
       }
     }
     .right {
-      @include pad();
+      margin-top: 20px;
       @include media($desktop) {
         @include span-columns(3);
         @include omega;
