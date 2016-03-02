@@ -147,22 +147,22 @@ window.onhashchange = function() {
 $(".relatedWords .button").on("click", function(){
   $(this).remove();
   $(".relatedWords").css({ marginTop:200, opacity:0, visibility:"hidden" });
-  getRelatedWords(currentQuery, 50);
+  getRelatedWords(currentQuery, 100);
 })
 $(".definition .button").on("click", function(){
   $(this).remove();
   $(".definition").css({ marginTop:200, opacity:0, visibility:"hidden" });
-  getDefinition(currentQuery, 50);
+  getDefinition(currentQuery, 10);
 })
 $(".soundsLike .button").on("click", function(){
   $(this).remove();
   $(".soundsLike").css({ marginTop:200, opacity:0, visibility:"hidden" });
-  getSimilarSoundingWords(currentQuery, 50);
+  getSimilarSoundingWords(currentQuery, 100);
 })
 $(".rhymes .button").on("click", function(){
   $(this).remove();
   $(".rhymes").css({ marginTop:200, opacity:0, visibility:"hidden" });
-  getRhymingWords(currentQuery, 50);
+  getRhymingWords(currentQuery, 100);
 })
 $(document).ready(function() {
   switchWordTo(window.location.hash.substring(1));
