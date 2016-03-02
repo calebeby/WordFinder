@@ -145,18 +145,22 @@ window.onhashchange = function() {
   switchWordTo(window.location.hash.substring(1));
 };
 $(".relatedWords .button").on("click", function(){
+  $(this).remove();
   $(".relatedWords").css({ marginTop:200, opacity:0, visibility:"hidden" });
   getRelatedWords(currentQuery, 50);
 })
 $(".definition .button").on("click", function(){
+  $(this).remove();
   $(".definition").css({ marginTop:200, opacity:0, visibility:"hidden" });
   getDefinition(currentQuery, 50);
 })
 $(".soundsLike .button").on("click", function(){
+  $(this).remove();
   $(".soundsLike").css({ marginTop:200, opacity:0, visibility:"hidden" });
   getSimilarSoundingWords(currentQuery, 50);
 })
 $(".rhymes .button").on("click", function(){
+  $(this).remove();
   $(".rhymes").css({ marginTop:200, opacity:0, visibility:"hidden" });
   getRhymingWords(currentQuery, 50);
 })
