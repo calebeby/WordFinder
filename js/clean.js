@@ -103,7 +103,7 @@ var getDefinition = function(query, limit) {
         $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.senses[0].definition + "</p></li>");
       });
       console.log($list);
-      if ($data.results != []) {
+      if ($(data.results) != []) {
         $(".definition .text").html("<ol></ol>");
         $(".definition .text ol").html($list);
         $(".definition").removeAttr("style");
