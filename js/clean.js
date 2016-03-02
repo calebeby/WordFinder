@@ -149,7 +149,6 @@ $(".searchbox").on("keyup keydown change paste keypress", function(){
       });
       $(".searchbox").after("<div></div>")
       $(".searchbox + div").html($list);
-      
     }
   });
 });
