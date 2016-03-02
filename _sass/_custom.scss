@@ -62,6 +62,12 @@ input[type="search"] {
   &.startup {
     @include calc(margin-top, "50vh - 19px");
   }
+  .suggestions {
+    display: block;
+    a {
+      display: block;
+    }
+  }
 }
 input[type="color"],
 input[type="date"],
