@@ -78,8 +78,6 @@ var getRhymingWords = function(query, limit) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
       if ($list.length > 0) {
-        console.log($list.length > 0);
-        console.log($list);
         $(".rhymes .text").html($list)
         $(".rhymes").removeAttr("style");
       } else {
