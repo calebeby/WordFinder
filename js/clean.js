@@ -35,8 +35,13 @@ var getRelatedWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
-      $(".relatedWords .text").html($list)
-      $(".relatedWords").removeAttr("style");
+      if ($list !== []) {
+        $(".relatedWords .text").html($list)
+        $(".relatedWords").removeAttr("style");
+      } else {
+        $(".relatedWords .text").html("No related words could be found");
+        $(".relatedWords").removeAttr("style");
+      }
     }
   });
 }
@@ -51,9 +56,13 @@ var getSimilarSoundingWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
       });
-      $(".soundsLike .text").html("<p>" + $list.join(", ") + "</p>")
-      $(".soundsLike").removeAttr("style");
-      console.log("up to date");
+      if ($list !== []) {
+        $(".soundsLike .text").html("<p>" + $list.join(", ") + "</p>")
+        $(".soundsLike").removeAttr("style");
+      } else {
+        $(".soundsLike .text").html("Unable to find similar-sounding words");
+        $(".soundsLike").removeAttr("style");
+      }
     }
   });
 }
@@ -68,8 +77,13 @@ var getRhymingWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
-      $(".rhymes .text").html($list)
-      $(".rhymes").removeAttr("style");
+      if ($list !== []) {
+        $(".rhymes .text").html($list)
+        $(".rhymes").removeAttr("style");
+      } else {
+        $(".rhymes .text").html("Unable to find rhyming words")
+        $(".rhymes").removeAttr("style");
+      }
     }
   });
 }
@@ -86,11 +100,17 @@ var getDefinition = function(query, limit) {
       $(data.results).each(function(index, value) {
         //get part of speech
         var partOfSpeech = value.part_of_speech;
-        $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.senses[0].definition/*[0]*/ + "</p></li>");
+        $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.senses[0].definition + "</p></li>");
       });
-      $(".definition .text").html("<ol></ol>");
-      $(".definition .text ol").html($list);
-      $(".definition").removeAttr("style");
+      console.log($list);
+      if ($data.results != []) {
+        $(".definition .text").html("<ol></ol>");
+        $(".definition .text ol").html($list);
+        $(".definition").removeAttr("style");
+      } else {
+        $(".definition .text").html("Unable to find definitions");
+        $(".definition").removeAttr("style");
+      }
     }
   });
 }
