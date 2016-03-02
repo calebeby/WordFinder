@@ -135,6 +135,23 @@ $.fn.pressEnter = function(fn) {
 $(".searchbox").focus(function() {
   $($allCards).css({ marginTop:200, opacity:0, visibility:"hidden" });
 });
+
+$(".searchbox").on("keyup keydown change paste keypress", function(){
+  $.ajax({
+    url: 'https://api.datamuse.com/sug?s=' + $(".searchbox").val() + "&max=3",
+    type: 'get',
+    dataType: 'json',
+    cache: true,
+    success: function(data) {
+      var $list = [];
+      $(data).each(function(index, value) {
+        $list.push("<a>" + value.word + "</a>");
+      });
+      $(".searchbox").after("<div></div>")
+      $(".searchbox + div").html($list);
+    }
+  });
+});
 $(".searchbox").pressEnter(function() {
   $(this).blur();
 });
