@@ -62,7 +62,7 @@ input[type="search"] {
   &.startup {
     @include calc(margin-top, "50vh - 19px");
   }
-  .suggestions {
+  div {
     display: block;
     a {
       display: block;
