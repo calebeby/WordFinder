@@ -1,7 +1,7 @@
 Waves.attach('.button.flat', 'waves-dark');
 Waves.init();
 var currentQuery;
-var $cache = true;
+var $cache = false;
 var $allCards = ".soundsLike, .definition, .relatedWords, .rhymes"
 var switchWordTo = function(query) {
   window.scrollTo(0, 0);
@@ -100,7 +100,7 @@ var loadWord = function(query) {
   getRelatedWords(query, 10);
   getSimilarSoundingWords(query, 10);
   getRhymingWords(query, 10);
-  getDefinition(query, 10);
+  getDefinition(query, 3);
 
 }
 $.fn.pressEnter = function(fn) {
