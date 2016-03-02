@@ -18,6 +18,7 @@ var switchWordTo = function(query) {
       $($allCards).removeAttr("style");
     }
   } else { //is blank, so go to reset mode
+    $($allCards).css({ marginTop:200, opacity:0, visibility:"hidden" });
   }
 }
 var goHome = function() {
@@ -126,5 +127,4 @@ window.onhashchange = function() {
 };
 $(document).ready(function() {
   switchWordTo(window.location.hash.substring(1));
-  currentQuery = window.location.hash.substring(1);
 });
