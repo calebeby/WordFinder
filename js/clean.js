@@ -147,7 +147,10 @@ $(".searchbox").on("keyup keydown change paste keypress", function(){
       $(data).each(function(index, value) {
         $list.push("<a>" + value.word + "</a>");
       });
-      $(".searchbox").after("<div></div>")
+      $(".searchbox").after("<div></div>");
+      if (".searchbox + div" !== null) {
+
+      }
       $(".searchbox + div").html($list);
     }
   });
