@@ -35,7 +35,7 @@ var getRelatedWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
-      if ($list !== []) {
+      if ($list.length > 0) {
         $(".relatedWords .text").html($list)
         $(".relatedWords").removeAttr("style");
       } else {
@@ -56,7 +56,7 @@ var getSimilarSoundingWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
       });
-      if ($list !== []) {
+      if ($list.length > 0) {
         $(".soundsLike .text").html("<p>" + $list.join(", ") + "</p>")
         $(".soundsLike").removeAttr("style");
       } else {
@@ -77,8 +77,8 @@ var getRhymingWords = function(query, limit) {
       $(data).each(function(index, value) {
         $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
       });
-      if ($list !== []) {
-        console.log($list !== []);
+      if ($list.length > 0) {
+        console.log($list.length > 0);
         console.log($list);
         $(".rhymes .text").html($list)
         $(".rhymes").removeAttr("style");
@@ -104,7 +104,7 @@ var getDefinition = function(query, limit) {
         var partOfSpeech = value.part_of_speech;
         $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.senses[0].definition + "</p></li>");
       });
-      if ($list !== []) {
+      if ($list.length > 0) {
         $(".definition .text").html("<ol></ol>");
         $(".definition .text ol").html($list);
         $(".definition").removeAttr("style");
