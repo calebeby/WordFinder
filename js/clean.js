@@ -129,7 +129,7 @@ $.fn.pressEnter = function(fn) {
       if (e.keyCode == 13) {
         $(this).trigger("enterPress");
       }
-    })
+    });
   });
 };
 $(".searchbox").focus(function() {
@@ -144,26 +144,26 @@ $(".searchbox").blur(function() {
 window.onhashchange = function() {
   switchWordTo(window.location.hash.substring(1));
 };
-$(".relatedWords .button").on("click", function(){
+$(".relatedWords .button").on("click", function() {
   $(this).remove();
   $(".relatedWords").css({ marginTop:200, opacity:0, visibility:"hidden" });
   getRelatedWords(currentQuery, 100);
-})
-$(".definition .button").on("click", function(){
+});
+$(".definition .button").on("click", function() {
   $(this).remove();
   $(".definition").css({ marginTop:200, opacity:0, visibility:"hidden" });
   getDefinition(currentQuery, 10);
-})
-$(".soundsLike .button").on("click", function(){
+});
+$(".soundsLike .button").on("click", function() {
   $(this).remove();
   $(".soundsLike").css({ marginTop:200, opacity:0, visibility:"hidden" });
   getSimilarSoundingWords(currentQuery, 100);
-})
-$(".rhymes .button").on("click", function(){
+});
+$(".rhymes .button").on("click", function() {
   $(this).remove();
   $(".rhymes").css({ marginTop:200, opacity:0, visibility:"hidden" });
   getRhymingWords(currentQuery, 100);
-})
+});
 $(document).ready(function() {
   switchWordTo(window.location.hash.substring(1));
 });
