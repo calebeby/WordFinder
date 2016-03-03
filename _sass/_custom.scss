@@ -58,16 +58,26 @@ input[type="search"] {
     z-index: 8;
     min-width: 80%;
     @include calc(margin-top, "50vh - 19px");
+    & + div {
+      min-width: 80%;
+      display: block;
+      a {
+        display: block;
+      }
+    }
+  }
+  & + div {
+    left: 0;
+    right: 0;
+    text-overflow: ellipsis;
+    min-width: 32%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 8;
   }
   &.startup {
     @include calc(margin-top, "50vh - 19px");
-  }
-  & + div {
-    display: block;
-    a {
-      display: block;
-      background-color: gray;
-    }
   }
 }
 input[type="color"],
