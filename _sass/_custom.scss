@@ -69,6 +69,7 @@ input[type="search"] {
     }
   }
   & + div {
+    @include transition(0.35s ease all);
     visibility: hidden;
     left: 0;
     right: 0;
