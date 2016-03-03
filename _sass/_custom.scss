@@ -61,8 +61,7 @@ input[type="search"] {
     & + div {
     visibility: visible;
       @include elevation(3);
-      min-width: 80%;
-      max-width: 80%;
+      width: 80%;
       display: block;
       a {
         display: block;
@@ -74,11 +73,10 @@ input[type="search"] {
     left: 0;
     right: 0;
     text-overflow: ellipsis;
-    min-width: 32%;
-    max-width: 100%;
+    width: 32%;
     margin-left: auto;
     margin-right: auto;
-    z-index: 8;
+    z-index: 9;
   }
   &.startup {
     @include calc(margin-top, "50vh - 19px");
