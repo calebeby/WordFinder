@@ -1,3 +1,4 @@
+// TODO: fix double shadow with suggestions
 $phone: new-breakpoint(max-width 480px, $total-columns: 4);
 $tablet: new-breakpoint(min-width 480px max-width 840px, $total-columns: 8);
 $desktop: new-breakpoint(min-width 840px, $total-columns: 12);
@@ -21,6 +22,7 @@ body {
   margin-top: 20px;
 }
 a {
+  cursor: pointer;
   color: #03a9f4;
   text-decoration: none;
   &:visited {
@@ -39,6 +41,7 @@ a.button {
   @extend %buttons;
 }
 header {
+  z-index: 10;
   width: 100%;
   position: fixed;
 }

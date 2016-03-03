@@ -1,3 +1,5 @@
+// TODO: fix it so that the more button can come up after clicking and going to another query
+// TODO: cancel all requests if it is blank, or search box has been focused. (the problem was it was loading the dictionary, even after the search box had been pressed.)
 Waves.attach('.button.flat', 'waves-dark');
 Waves.init();
 var currentQuery;
@@ -91,7 +93,7 @@ var getDefinition = function(query, limit) {
     url: 'https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + query + "&limit=" + limit,
     type: 'get',
     dataType: 'json',
-    cache: true,
+    cache: $cache,
     success: function(data) {
       var $list;
       $list = [];
@@ -135,21 +137,22 @@ $(".searchbox").focus(function() {
   $($allCards).css({ marginTop:200, opacity:0, visibility:"hidden" });
 });
 
-$(".searchbox").on("keyup", function(){
+$(".searchbox").on("focus keyup", function(){
   var empty = $(".searchbox").val() == "";
   if ($(".searchbox").siblings().size() == 0) { //if div does not exist after search box, add it
     $(".searchbox").after("<div></div>");
   }
-  if (!empty) { //if field is not blank
-    $.ajax({
+  if (!empty) { //field is not blank
+    $(".searchbox + div").empty();
+    $.ajax({ //load suggestions
       url: 'https://api.datamuse.com/sug?s=' + $(".searchbox").val() + "&max=3",
       type: 'get',
       dataType: 'json',
-      cache: true,
+      cache: $cache,
       success: function(data) {
         var $list = [];
         $(data).each(function(index, value) {
-          $list.push("<a>" + value.word + "</a>");
+          $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
         });
         $(".searchbox + div").html($list);
       }
@@ -157,13 +160,12 @@ $(".searchbox").on("keyup", function(){
   } else { //field is blank
     var queries = [];
     $.each(oldQueries, function(index, value){
-      queries.push("<a class='old'>" + value + "</a>")
+      queries.push("<a href='#" + value + "'class='old'>" + value + "</a>")
     });
     $(".searchbox + div").html(queries);
   }
 });
-$(".searchbox + div").on("click", "a", function() {
-  console.log("hi");
+$(".searchbox + div").on("mousedown", "a", function() {
   $(".searchbox").val($(this).html()).blur();
 })
 $(".searchbox").pressEnter(function() {
