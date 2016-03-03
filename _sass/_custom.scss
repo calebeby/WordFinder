@@ -8,7 +8,6 @@ body {
   margin: 0;
 }
 @import "components/waves";
-
 .relatedWords,
 .rhymes,
 .definition,
@@ -59,7 +58,8 @@ input[type="search"] {
     min-width: 80%;
     @include calc(margin-top, "50vh - 19px");
     & + div {
-    visibility: visible;
+      visibility: visible;
+      opacity: 100;
       @include elevation(3);
       width: 80%;
       display: block;
@@ -68,6 +68,7 @@ input[type="search"] {
   & + div {
     @include transition(0.35s ease all);
     visibility: hidden;
+    opacity: 0;
     left: 0;
     right: 0;
     text-overflow: ellipsis;
@@ -76,7 +77,16 @@ input[type="search"] {
     margin-right: auto;
     z-index: 9;
     a {
+      padding: 10px;
+      padding-left: 40px;
       display: block;
+      &.old {
+        background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20version%3D%221.1%22%20%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%0A%20%20%20%3Cpath%20fill%3D%22%23888888%22%20d%3D%22M11%2C7V12.11L15.71%2C14.9L16.5%2C13.62L12.5%2C11.25V7M12.5%2C2C8.97%2C2%205.91%2C3.92%204.27%2C6.77L2%2C4.5V11H8.5L5.75%2C8.25C6.96%2C5.73%209.5%2C4%2012.5%2C4A7.5%2C7.5%200%200%2C1%2020%2C11.5A7.5%2C7.5%200%200%2C1%2012.5%2C19C9.23%2C19%206.47%2C16.91%205.44%2C14H3.34C4.44%2C18.03%208.11%2C21%2012.5%2C21C17.74%2C21%2022%2C16.75%2022%2C11.5A9.5%2C9.5%200%200%2C0%2012.5%2C2Z%22%20%2F%3E%0A%3C%2Fsvg%3E");
+        background-size: 22px 22px;
+        background-repeat: no-repeat;
+        background-origin: padding-box;
+        background-position: 10px 50%;
+      }
     }
   }
   &.startup {
@@ -99,8 +109,12 @@ input[type="week"],
 textarea {
   @extend %text-inputs;
 }
-.highlighter-rouge { @extend %highlight; }
-.icon { @extend %icons; }
+.highlighter-rouge {
+  @extend %highlight;
+}
+.icon {
+  @extend %icons;
+}
 main {
   .row {
     padding-top: 50px;

@@ -1,18 +1,20 @@
 Waves.attach('.button.flat', 'waves-dark');
 Waves.init();
 var currentQuery;
+var oldQueries = [];
 var $cache = false;
 var $allCards = ".soundsLike, .definition, .relatedWords, .rhymes"
 var switchWordTo = function(query) {
   window.scrollTo(0, 0);
   if (query != "") { //if it is not blank
     query = query
-    .split("+").join(" ")
-    .split("%20").join(" ");
+      .split("+").join(" ")
+      .split("%20").join(" ");
     if (query !== currentQuery) {
       $(".searchbox").val(query);
       loadWord(query);
       window.location.hash = query;
+      oldQueries.unshift(query);
       currentQuery = query;
     } else { //the query is the same as it was last time, so show the data
       $($allCards).removeAttr("style");
@@ -20,9 +22,6 @@ var switchWordTo = function(query) {
   } else { //is blank, so go to reset mode
     $($allCards).css({ marginTop:200, opacity:0, visibility:"hidden" });
   }
-}
-var goHome = function() {
-
 }
 var getRelatedWords = function(query, limit) {
   $.ajax({
@@ -136,24 +135,37 @@ $(".searchbox").focus(function() {
   $($allCards).css({ marginTop:200, opacity:0, visibility:"hidden" });
 });
 
-$(".searchbox").on("keyup keydown change paste keypress", function(){
-  $.ajax({
-    url: 'https://api.datamuse.com/sug?s=' + $(".searchbox").val() + "&max=3",
-    type: 'get',
-    dataType: 'json',
-    cache: true,
-    success: function(data) {
-      var $list = [];
-      $(data).each(function(index, value) {
-        $list.push("<a>" + value.word + "</a>");
-      });
-      if ($(".searchbox").siblings().size() == 0) {
-        $(".searchbox").after("<div></div>");
+$(".searchbox").on("keyup", function(){
+  var empty = $(".searchbox").val() == "";
+  if ($(".searchbox").siblings().size() == 0) { //if div does not exist after search box, add it
+    $(".searchbox").after("<div></div>");
+  }
+  if (!empty) { //if field is not blank
+    $.ajax({
+      url: 'https://api.datamuse.com/sug?s=' + $(".searchbox").val() + "&max=3",
+      type: 'get',
+      dataType: 'json',
+      cache: true,
+      success: function(data) {
+        var $list = [];
+        $(data).each(function(index, value) {
+          $list.push("<a>" + value.word + "</a>");
+        });
+        $(".searchbox + div").html($list);
       }
-      $(".searchbox + div").html($list);
-    }
-  });
+    });
+  } else { //field is blank
+    var queries = [];
+    $.each(oldQueries, function(index, value){
+      queries.push("<a class='old'>" + value + "</a>")
+    });
+    $(".searchbox + div").html(queries);
+  }
 });
+$(".searchbox + div").on("click", "a", function() {
+  console.log("hi");
+  $(".searchbox").val($(this).html()).blur();
+})
 $(".searchbox").pressEnter(function() {
   $(this).blur();
 });
