@@ -59,6 +59,7 @@ input[type="search"] {
     min-width: 80%;
     @include calc(margin-top, "50vh - 19px");
     & + div {
+    visibility: visible;
       @include elevation(3);
       min-width: 80%;
       display: block;
