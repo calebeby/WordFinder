@@ -1,6 +1,6 @@
 // TODO: fix it so that the more button can come up after clicking and going to another query
 // TODO: cancel all requests if it is blank, or search box has been focused. (the problem was it was loading the dictionary, even after the search box had been pressed.)
-Waves.attach('.button.flat', 'waves-dark');
+  Waves.attach('.button.flat', 'waves-dark');
 Waves.init();
 var currentQuery;
 var oldQueries = [];
@@ -145,10 +145,14 @@ $(".searchbox").on("focus keyup", function(){
   if (!empty) { //field is not blank
     $(".searchbox + div").empty();
     $.ajax({ //load suggestions
-      url: 'https://api.datamuse.com/sug?s=' + $(".searchbox").val() + "&max=3",
+      url: 'https://api.collinsdictionary.com/api/v1/dictionaries/english/search/didyoumean?start=0&entrynumber=3&page=1&limit=25&q=' + $(".searchbox").val(),
       type: 'get',
       dataType: 'json',
       cache: $cache,
+      headers: {
+        'Accept': 'application/json',
+        'accessKey': "Jqvg9iAG0Wzpre5dNEB1Cl3Xmw9cFY4AQD9wqNmEPPCovxeHJDfLKTiKkWZgp42Q"
+      },
       success: function(data) {
         var $list = [];
         $(data).each(function(index, value) {
