@@ -1,6 +1,6 @@
 // TODO: fix it so that the more button can come up after clicking and going to another query
 // TODO: cancel all requests if it is blank, or search box has been focused. (the problem was it was loading the dictionary, even after the search box had been pressed.)
-  Waves.attach('.button.flat', 'waves-dark');
+Waves.attach('.button.flat', 'waves-dark');
 Waves.init();
 var currentQuery;
 var oldQueries = [];
@@ -22,7 +22,11 @@ var switchWordTo = function(query) {
       $($allCards).removeAttr("style");
     }
   } else { //is blank, so go to reset mode
-    $($allCards).css({ marginTop:200, opacity:0, visibility:"hidden" });
+    $($allCards).css({
+      marginTop: 200,
+      opacity: 0,
+      visibility: "hidden"
+    });
   }
 }
 var getRelatedWords = function(query, limit) {
@@ -69,7 +73,7 @@ var getSimilarSoundingWords = function(query, limit) {
 }
 var getRhymingWords = function(query, limit) {
   $.ajax({
-    url: 'https://api.datamuse.com/words?rel_rhy=' + query + "&max=" + limit,
+    url: 'https://api.datamuse.com/words?rel_rhy=' + query.split(" ").pop() + "&max=" + limit,
     type: 'get',
     dataType: 'json',
     cache: $cache,
@@ -116,7 +120,11 @@ var getDefinition = function(query, limit) {
 }
 var loadWord = function(query) {
   //slide down and out
-  $($allCards).css({ marginTop:200, opacity:0, visibility:"hidden" });
+  $($allCards).css({
+    marginTop: 200,
+    opacity: 0,
+    visibility: "hidden"
+  });
   getRelatedWords(query, 10);
   getSimilarSoundingWords(query, 10);
   getRhymingWords(query, 10);
@@ -134,48 +142,90 @@ $.fn.pressEnter = function(fn) {
   });
 };
 $(".searchbox").focus(function() {
-  $($allCards).css({ marginTop:200, opacity:0, visibility:"hidden" });
+  $(".search-outer").addClass("focus");
+  $($allCards).css({
+    marginTop: 200,
+    opacity: 0,
+    visibility: "hidden"
+  });
 });
 
-$(".searchbox").on("focus keyup", function(){
-  var empty = $(".searchbox").val() == "";
-  if ($(".searchbox").siblings().size() == 0) { //if div does not exist after search box, add it
-    $(".searchbox").after("<div></div>");
+$(".searchbox").on("focus keyup", function(e) {
+  var code = (e.keyCode || e.which);
+  if(code == 37 || code == 38 || code == 39 || code == 40) { //if it's an arrow key, stop
+    return;
   }
+  var empty = $(".searchbox").val() == "";
   if (!empty) { //field is not blank
-    $(".searchbox + div").empty();
+    $(".search-outer").find("a").remove();
+    $.ajax({ //load suggestions
+      url: 'https://api.datamuse.com/sug?s=' + $(".searchbox").val() + "&max=3",
+      type: 'get',
+      dataType: 'json',
+      cache: $cache,
+      success: function(data) {
+        var $list = [];
+        $(data).each(function(index, value) {
+          $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
+        });
+        $(".search-outer").append($list);
+      }
+    });
+    /*
     $.ajax({ //load suggestions
       url: 'https://api.collinsdictionary.com/api/v1/dictionaries/english/search/didyoumean?start=0&entrynumber=3&page=1&limit=25&q=' + $(".searchbox").val(),
       type: 'get',
       dataType: 'json',
       cache: $cache,
       headers: {
+        'host': '127.0.0.1:4000',
         'Accept': 'application/json',
-        'accessKey': "Jqvg9iAG0Wzpre5dNEB1Cl3Xmw9cFY4AQD9wqNmEPPCovxeHJDfLKTiKkWZgp42Q"
+        'accessKey': 'Jqvg9iAG0Wzpre5dNEB1Cl3Xmw9cFY4AQD9wqNmEPPCovxeHJDfLKTiKkWZgp42Q'
       },
       success: function(data) {
         var $list = [];
         $(data).each(function(index, value) {
           $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
         });
-        $(".searchbox + div").html($list);
+        $(".search-outer").append($list);
       }
     });
+    */
   } else { //field is blank
     var queries = [];
-    $.each(oldQueries, function(index, value){
+    $.each(oldQueries, function(index, value) {
       queries.push("<a href='#" + value + "'class='old'>" + value + "</a>")
     });
-    $(".searchbox + div").html(queries);
+    $(".search-outer").append(queries);
   }
 });
-$(".searchbox + div").on("mousedown", "a", function() {
+$(".search-outer").on("mousedown", "a", function() {
   $(".searchbox").val($(this).html()).blur();
-})
+});
+var selectedSuggestion = 0;
+$(window).keydown(function(e) {
+  var suggestion = $(".search-outer > * ");
+  if (e.which === 40) { //down arrow
+    suggestion.eq(selectedSuggestion).removeClass('selected');
+    selectedSuggestion--;
+    if (!suggestion.eq(selectedSuggestion).length()) {
+      selectedSuggestion = 0;
+    }
+    suggestion.eq(selectedSuggestion).addClass('selected');
+  } else if (e.which === 38) { //up arrow
+    suggestion.eq(selectedSuggestion).removeClass('selected');
+    selectedSuggestion--;
+    suggestion.eq(selectedSuggestion).addClass('selected');
+    if (!suggestion.eq(selectedSuggestion).length()) {
+      selectedSuggestion = suggestion.length();
+    }
+  }
+});
 $(".searchbox").pressEnter(function() {
   $(this).blur();
 });
 $(".searchbox").blur(function() {
+  $(".search-outer").removeClass("focus")
   switchWordTo($(".searchbox").val());
 });
 window.onhashchange = function() {
@@ -183,22 +233,38 @@ window.onhashchange = function() {
 };
 $(".relatedWords .button").on("click", function() {
   $(".relatedWords .actions").remove();
-  $(".relatedWords").css({ marginTop:200, opacity:0, visibility:"hidden" });
+  $(".relatedWords").css({
+    marginTop: 200,
+    opacity: 0,
+    visibility: "hidden"
+  });
   getRelatedWords(currentQuery, 100);
 });
 $(".definition .button").on("click", function() {
   $(".definition .actions").remove();
-  $(".definition").css({ marginTop:200, opacity:0, visibility:"hidden" });
+  $(".definition").css({
+    marginTop: 200,
+    opacity: 0,
+    visibility: "hidden"
+  });
   getDefinition(currentQuery, 10);
 });
 $(".soundsLike .button").on("click", function() {
   $(".soundsLike .actions").remove();
-  $(".soundsLike").css({ marginTop:200, opacity:0, visibility:"hidden" });
+  $(".soundsLike").css({
+    marginTop: 200,
+    opacity: 0,
+    visibility: "hidden"
+  });
   getSimilarSoundingWords(currentQuery, 100);
 });
 $(".rhymes .button").on("click", function() {
   $(".rhymes .actions").remove();
-  $(".rhymes").css({ marginTop:200, opacity:0, visibility:"hidden" });
+  $(".rhymes").css({
+    marginTop: 200,
+    opacity: 0,
+    visibility: "hidden"
+  });
   getRhymingWords(currentQuery, 100);
 });
 $(document).ready(function() {
