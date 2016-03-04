@@ -207,7 +207,7 @@ $(window).keydown(function(e) {
   var suggestion = $(".search-outer > * ");
   if (e.which === 40) { //down arrow
     suggestion.eq(selectedSuggestion).removeClass('selected');
-    selectedSuggestion--;
+    selectedSuggestion++;
     if (!suggestion.eq(selectedSuggestion).length) {
       selectedSuggestion = 0;
     }
