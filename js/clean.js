@@ -5,7 +5,8 @@ Waves.init();
 var currentQuery;
 var oldQueries = [];
 var $cache = false;
-var $allCards = ".soundsLike, .definition, .relatedWords, .rhymes"
+var $allCards = ".soundsLike, .definition, .relatedWords, .rhymes";
+var originalSearch;
 var switchWordTo = function(query) {
   window.scrollTo(0, 0);
   if (query != "") { //if it is not blank
@@ -143,6 +144,7 @@ $.fn.pressEnter = function(fn) {
 };
 $(".searchbox").focus(function() {
   $(".search-outer").addClass("focus");
+  originalSearch = $(".searchbox").val();
   $($allCards).css({
     marginTop: 200,
     opacity: 0,
@@ -204,7 +206,6 @@ $(".search-outer").on("mousedown", "a", function() {
 });
 var selectedSuggestion = 0;
 $(window).keydown(function(e) {
-  var originalSearch = $(".searchbox").val();
   var suggestion = $(".search-outer > * ");
   suggestion.eq(selectedSuggestion).addClass('selected');
   if (e.which === 40) { //down arrow
@@ -223,9 +224,11 @@ $(window).keydown(function(e) {
     suggestion.eq(selectedSuggestion).addClass('selected');
   }
   if ($("a.selected").length > 0) { //one the suggestions is selected
+    console.log("one of the suggestions is selected");
     $(".searchbox").val($("a.selected").text());
   } else { //none of the suggestions are suggested
-      $(".searchbox").val(originalSearch); //revert it to original value
+    console.log("none of the suggestions are selected");
+    $(".searchbox").val(originalSearch); //revert it to original value
   }
 });
 $(".searchbox").pressEnter(function() {
