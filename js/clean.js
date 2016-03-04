@@ -204,9 +204,9 @@ $(".search-outer").on("mousedown", "a", function() {
 });
 var selectedSuggestion = 0;
 $(window).keydown(function(e) {
-  suggestion.eq(selectedSuggestion).addClass('selected');
   var originalSearch = $(".searchbox").val();
   var suggestion = $(".search-outer > * ");
+  suggestion.eq(selectedSuggestion).addClass('selected');
   if (e.which === 40) { //down arrow
     suggestion.eq(selectedSuggestion).removeClass('selected');
     selectedSuggestion++;
