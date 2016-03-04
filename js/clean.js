@@ -144,7 +144,6 @@ $.fn.pressEnter = function(fn) {
 };
 $(".searchbox").focus(function() {
   $(".search-outer").addClass("focus");
-  originalSearch = $(".searchbox").val();
   $($allCards).css({
     marginTop: 200,
     opacity: 0,
@@ -153,6 +152,7 @@ $(".searchbox").focus(function() {
 });
 
 $(".searchbox").on("focus keyup", function(e) {
+  originalSearch = $(".searchbox").val();
   var code = (e.keyCode || e.which);
   if(code == 37 || code == 38 || code == 39 || code == 40) { //if it's an arrow key, stop
     return;
