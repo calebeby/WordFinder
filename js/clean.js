@@ -204,27 +204,28 @@ $(".search-outer").on("mousedown", "a", function() {
 });
 var selectedSuggestion = 0;
 $(window).keydown(function(e) {
+  suggestion.eq(selectedSuggestion).addClass('selected');
   var originalSearch = $(".searchbox").val();
   var suggestion = $(".search-outer > * ");
   if (e.which === 40) { //down arrow
     suggestion.eq(selectedSuggestion).removeClass('selected');
     selectedSuggestion++;
-    if (!suggestion.eq(selectedSuggestion).length) {
+    if (!suggestion.eq(selectedSuggestion).length) { //none are found at the given index
       selectedSuggestion = 0;
     }
     suggestion.eq(selectedSuggestion).addClass('selected');
   } else if (e.which === 38) { //up arrow
     suggestion.eq(selectedSuggestion).removeClass('selected');
     selectedSuggestion--;
-    suggestion.eq(selectedSuggestion).addClass('selected');
-    if (!suggestion.eq(selectedSuggestion).length) {
+    if (!suggestion.eq(selectedSuggestion).length) { //none are found at the given index
       selectedSuggestion = suggestion.length;
-    } else {
-      
     }
+    suggestion.eq(selectedSuggestion).addClass('selected');
   }
-  if ($("a.selected").length > 0) {
+  if ($("a.selected").length > 0) { //one the suggestions is selected
     $(".searchbox").val($("a.selected").text());
+  } else { //none of the suggestions are suggested
+      $(".searchbox").val(originalSearch); //revert it to original value
   }
 });
 $(".searchbox").pressEnter(function() {
