@@ -205,6 +205,10 @@ $(".search-outer").on("mousedown", "a", function() {
 var selectedSuggestion = 0;
 $(window).keydown(function(e) {
   var suggestion = $(".search-outer > * ");
+  if ($("a.selected").length > 0) {
+    $(".searchbox").val($("a.selected").text());
+
+  }
   if (e.which === 40) { //down arrow
     suggestion.eq(selectedSuggestion).removeClass('selected');
     selectedSuggestion++;
