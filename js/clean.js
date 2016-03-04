@@ -208,7 +208,7 @@ $(window).keydown(function(e) {
   if (e.which === 40) { //down arrow
     suggestion.eq(selectedSuggestion).removeClass('selected');
     selectedSuggestion--;
-    if (!suggestion.eq(selectedSuggestion).length()) {
+    if (!suggestion.eq(selectedSuggestion).length) {
       selectedSuggestion = 0;
     }
     suggestion.eq(selectedSuggestion).addClass('selected');
@@ -216,8 +216,8 @@ $(window).keydown(function(e) {
     suggestion.eq(selectedSuggestion).removeClass('selected');
     selectedSuggestion--;
     suggestion.eq(selectedSuggestion).addClass('selected');
-    if (!suggestion.eq(selectedSuggestion).length()) {
-      selectedSuggestion = suggestion.length();
+    if (!suggestion.eq(selectedSuggestion).length) {
+      selectedSuggestion = suggestion.length;
     }
   }
 });
