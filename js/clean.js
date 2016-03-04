@@ -6,7 +6,6 @@ var currentQuery;
 var oldQueries = [];
 var $cache = false;
 var $allCards = ".soundsLike, .definition, .relatedWords, .rhymes";
-var originalSearch;
 var switchWordTo = function(query) {
   window.scrollTo(0, 0);
   if (query != "") { //if it is not blank
@@ -152,7 +151,6 @@ $(".searchbox").focus(function() {
 });
 
 $(".searchbox").on("focus keyup", function(e) {
-  originalSearch = $(".searchbox").val();
   var code = (e.keyCode || e.which);
   if(code == 37 || code == 38 || code == 39 || code == 40) { //if it's an arrow key, stop
     return;
@@ -196,7 +194,7 @@ $(".searchbox").on("focus keyup", function(e) {
   } else { //field is blank
     var queries = [];
     $.each(oldQueries, function(index, value) {
-      queries.push("<a href='#" + value + "'class='old'>" + value + "</a>")
+      queries.push("<a href='#" + value + "'class='old'>" + value + "</a>");
     });
     $(".search-outer").append(queries);
   }
@@ -227,7 +225,7 @@ $(window).keydown(function(e) {
     $(".searchbox").val($("a.selected").text());
   }
   if (selectedSuggestion === 0) { //searchbox is selected
-    $(".searchbox").val(originalSearch); //revert it to original value
+    $(".searchbox").val(window.location.hash.substring(1)); //revert it to original value
   }
 });
 $(".searchbox").pressEnter(function() {
