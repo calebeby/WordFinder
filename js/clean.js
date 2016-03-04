@@ -224,10 +224,9 @@ $(window).keydown(function(e) {
     suggestion.eq(selectedSuggestion).addClass('selected');
   }
   if ($("a.selected").length > 0) { //one the suggestions is selected
-    console.log("one of the suggestions is selected");
     $(".searchbox").val($("a.selected").text());
-  } else { //none of the suggestions are suggested
-    console.log("none of the suggestions are selected");
+  }
+  if (selectedSuggestion === 0) { //searchbox is selected
     $(".searchbox").val(originalSearch); //revert it to original value
   }
 });
