@@ -22,5 +22,5 @@ markdown: kramdown
 kramdown:
   input: GFM # Enable GitHub Flavored Markdown (fenced code blocks)
   syntax_highlighter: rouge
-#sass:
-#  style: compressed
+sass:
+  style: compressed
