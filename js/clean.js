@@ -1,11 +1,14 @@
 // TODO: fix it so that the more button can come up after clicking and going to another query
 // TODO: cancel all requests if it is blank, or search box has been focused. (the problem was it was loading the dictionary, even after the search box had been pressed.)
+// TODO: fix left and right arrows
 Waves.attach('.button.flat', 'waves-dark');
 Waves.init();
 var currentQuery;
 var oldQueries = [];
 var $cache = false;
 var $allCards = ".soundsLike, .definition, .relatedWords, .rhymes";
+var searchBoxValue;
+var selectedSuggestion;
 var switchWordTo = function(query) {
   window.scrollTo(0, 0);
   if (query != "") { //if it is not blank
@@ -143,69 +146,74 @@ $.fn.pressEnter = function(fn) {
 };
 $(".searchbox").focus(function() {
   $(".search-outer").addClass("focus");
+  selectedSuggestion = 0;
   $($allCards).css({
     marginTop: 200,
     opacity: 0,
     visibility: "hidden"
   });
 });
-
-$(".searchbox").on("focus keyup", function(e) {
-  var code = (e.keyCode || e.which);
-  if(code == 37 || code == 38 || code == 39 || code == 40) { //if it's an arrow key, stop
-    return;
-  }
-  var empty = $(".searchbox").val() == "";
-  if (!empty) { //field is not blank
-    $(".search-outer").find("a").remove();
-    $.ajax({ //load suggestions
-      url: 'https://api.datamuse.com/sug?s=' + $(".searchbox").val() + "&max=3",
-      type: 'get',
-      dataType: 'json',
-      cache: $cache,
-      success: function(data) {
-        var $list = [];
-        $(data).each(function(index, value) {
-          $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
-        });
-        $(".search-outer").append($list);
-      }
-    });
-    /*
-    $.ajax({ //load suggestions
-      url: 'https://api.collinsdictionary.com/api/v1/dictionaries/english/search/didyoumean?start=0&entrynumber=3&page=1&limit=25&q=' + $(".searchbox").val(),
-      type: 'get',
-      dataType: 'json',
-      cache: $cache,
-      headers: {
-        'host': '127.0.0.1:4000',
-        'Accept': 'application/json',
-        'accessKey': 'Jqvg9iAG0Wzpre5dNEB1Cl3Xmw9cFY4AQD9wqNmEPPCovxeHJDfLKTiKkWZgp42Q'
-      },
-      success: function(data) {
-        var $list = [];
-        $(data).each(function(index, value) {
-          $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
-        });
-        $(".search-outer").append($list);
-      }
-    });
-    */
-  } else { //field is blank
-    var queries = [];
-    $.each(oldQueries, function(index, value) {
-      queries.push("<a href='#" + value + "'class='old'>" + value + "</a>");
-    });
-    $(".search-outer").append(queries);
+$(".searchbox").keydown(function(event) {
+  if (event.which == 38 || event.which == 40)
+    event.preventDefault();
+});
+$(".searchbox").on("focus keyup", function(event) {
+  var code = (event.keyCode || event.which);
+  if (!(code == 37 || code == 39 || code == 38 || code == 40)) { //if it's not an arrow key
+    var empty = $(".searchbox").val() == "";
+    if (!empty) { //field is not blank
+      $(".search-outer").find("a").remove();
+      $.ajax({ //load suggestions
+        url: 'https://api.datamuse.com/sug?s=' + $(".searchbox").val() + "&max=3",
+        type: 'get',
+        dataType: 'json',
+        cache: $cache,
+        success: function(data) {
+          var $list = [];
+          $(data).each(function(index, value) {
+            $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
+          });
+          $(".search-outer").append($list);
+        }
+      });
+      /*
+      $.ajax({ //load suggestions
+        url: 'https://api.collinsdictionary.com/api/v1/dictionaries/english/search/didyoumean?start=0&entrynumber=3&page=1&limit=25&q=' + $(".searchbox").val(),
+        type: 'get',
+        dataType: 'json',
+        cache: $cache,
+        headers: {
+          'host': '127.0.0.1:4000',
+          'Accept': 'application/json',
+          'accessKey': 'Jqvg9iAG0Wzpre5dNEB1Cl3Xmw9cFY4AQD9wqNmEPPCovxeHJDfLKTiKkWZgp42Q'
+        },
+        success: function(data) {
+          var $list = [];
+          $(data).each(function(index, value) {
+            $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
+          });
+          $(".search-outer").append($list);
+        }
+      });
+      */
+    } else { //field is blank
+      var queries = [];
+      $.each(oldQueries, function(index, value) {
+        queries.push("<a href='#" + value + "'class='old'>" + value + "</a>");
+      });
+      $(".search-outer").append(queries);
+    }
   }
 });
 $(".search-outer").on("mousedown", "a", function() {
   $(".searchbox").val($(this).html()).blur();
 });
-var selectedSuggestion = 0;
-$(window).keydown(function(e) {
+$(".searchbox").keydown(function(e) {
   var suggestion = $(".search-outer > * ");
   suggestion.eq(selectedSuggestion).addClass('selected');
+  if (selectedSuggestion === 0) {
+    searchBoxValue = $(".searchbox").val();
+  }
   if (e.which === 40) { //down arrow
     suggestion.eq(selectedSuggestion).removeClass('selected');
     selectedSuggestion++;
@@ -225,7 +233,7 @@ $(window).keydown(function(e) {
     $(".searchbox").val($("a.selected").text());
   }
   if (selectedSuggestion === 0) { //searchbox is selected
-    $(".searchbox").val(window.location.hash.substring(1)); //revert it to original value
+    $(".searchbox").val(searchBoxValue); //revert it to original value
   }
 });
 $(".searchbox").pressEnter(function() {
