@@ -146,32 +146,31 @@ $.fn.pressEnter = function(fn) {
 };
 $(".searchbox").focus(function() {
   $(".search-outer").addClass("focus");
-  selectedSuggestion = 0;
+  $(this).addClass("selected");
   $($allCards).css({
     marginTop: 200,
     opacity: 0,
     visibility: "hidden"
   });
 });
-$(".searchbox").keydown(function(event) {
-  if (event.which == 38 || event.which == 40)
-    event.preventDefault();
-});
 $(".searchbox").on("focus keyup", function(event) {
   var code = (event.keyCode || event.which);
   if (!(code == 37 || code == 39 || code == 38 || code == 40)) { //if it's not an arrow key
+    selectedSuggestion = 0;
     var empty = $(".searchbox").val() == "";
+    $(".search-outer").find("a").remove();
     if (!empty) { //field is not blank
-      $(".search-outer").find("a").remove();
       $.ajax({ //load suggestions
-        url: 'https://api.datamuse.com/sug?s=' + $(".searchbox").val() + "&max=3",
+        url: 'https://api.datamuse.com/sug?s=' + $(".searchbox").val() + "&max=10",
         type: 'get',
         dataType: 'json',
         cache: $cache,
         success: function(data) {
           var $list = [];
           $(data).each(function(index, value) {
-            $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
+            if (value.word != $(".searchbox").val()) {
+              $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
+            }
           });
           $(".search-outer").append($list);
         }
@@ -209,31 +208,34 @@ $(".search-outer").on("mousedown", "a", function() {
   $(".searchbox").val($(this).html()).blur();
 });
 $(".searchbox").keydown(function(e) {
-  var suggestion = $(".search-outer > * ");
-  suggestion.eq(selectedSuggestion).addClass('selected');
-  if (selectedSuggestion === 0) {
-    searchBoxValue = $(".searchbox").val();
-  }
-  if (e.which === 40) { //down arrow
-    suggestion.eq(selectedSuggestion).removeClass('selected');
-    selectedSuggestion++;
-    if (!suggestion.eq(selectedSuggestion).length) { //none are found at the given index
-      selectedSuggestion = 0;
-    }
+  if (event.which == 38 || event.which == 40) {
+    event.preventDefault();
+    var suggestion = $(".search-outer > * ");
     suggestion.eq(selectedSuggestion).addClass('selected');
-  } else if (e.which === 38) { //up arrow
-    suggestion.eq(selectedSuggestion).removeClass('selected');
-    selectedSuggestion--;
-    if (!suggestion.eq(selectedSuggestion).length) { //none are found at the given index
-      selectedSuggestion = suggestion.length;
+    if (selectedSuggestion === 0) {
+      searchBoxValue = $(".searchbox").val();
     }
-    suggestion.eq(selectedSuggestion).addClass('selected');
-  }
-  if ($("a.selected").length > 0) { //one the suggestions is selected
-    $(".searchbox").val($("a.selected").text());
-  }
-  if (selectedSuggestion === 0) { //searchbox is selected
-    $(".searchbox").val(searchBoxValue); //revert it to original value
+    if (e.which === 40) { //down arrow
+      suggestion.eq(selectedSuggestion).removeClass('selected');
+      selectedSuggestion++;
+      if (!suggestion.eq(selectedSuggestion).length) { //none are found at the given index
+        selectedSuggestion = 0;
+      }
+      suggestion.eq(selectedSuggestion).addClass('selected');
+    } else if (e.which === 38) { //up arrow
+      suggestion.eq(selectedSuggestion).removeClass('selected');
+      selectedSuggestion--;
+      if (!suggestion.eq(selectedSuggestion).length) { //none are found at the given index
+        selectedSuggestion = suggestion.length;
+      }
+      suggestion.eq(selectedSuggestion).addClass('selected');
+    }
+    if ($("a.selected").length > 0) { //one the suggestions is selected
+      $(".searchbox").val($("a.selected").text());
+    }
+    if (selectedSuggestion === 0) { //searchbox is selected
+      $(".searchbox").val(searchBoxValue); //revert it to original value
+    }
   }
 });
 $(".searchbox").pressEnter(function() {
