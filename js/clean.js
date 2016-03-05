@@ -18,7 +18,7 @@ var switchWordTo = function(query) {
     if (query !== currentQuery) {
       $(".searchbox").val(query);
       loadWord(query);
-      window.location.hash = query;
+      window.location.hash = "s=" + query;
       oldQueries.unshift(query);
       currentQuery = query;
     } else { //the query is the same as it was last time, so show the data
@@ -41,7 +41,7 @@ var getRelatedWords = function(query, limit) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
+        $list.push("<p><a href='#s=" + value.word + "'>" + value.word + "</a></p>");
       });
       if ($list.length > 0) {
         $(".relatedWords .text").html($list)
@@ -62,7 +62,7 @@ var getSimilarSoundingWords = function(query, limit) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
+        $list.push("<a href='#s=" + value.word + "'>" + value.word + "</a>");
       });
       if ($list.length > 0) {
         $(".soundsLike .text").html("<p>" + $list.join(", ") + "</p>")
@@ -83,7 +83,7 @@ var getRhymingWords = function(query, limit) {
     success: function(data) {
       var $list = [];
       $(data).each(function(index, value) {
-        $list.push("<p><a href='#" + value.word + "'>" + value.word + "</a></p>");
+        $list.push("<p><a href='#s=" + value.word + "'>" + value.word + "</a></p>");
       });
       if ($list.length > 0) {
         $(".rhymes .text").html($list)
@@ -168,8 +168,8 @@ $(".searchbox").on("focus keyup", function(event) {
         success: function(data) {
           var $list = [];
           $(data).each(function(index, value) {
-            if (value.word != $(".searchbox").val()) {
-              $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
+            if (value.word != $(".searchbox").val()) { //if it's not in the search box
+              $list.push("<a href='#s=" + value.word + "'>" + value.word + "</a>");
             }
           });
           $(".search-outer").append($list);
@@ -189,7 +189,7 @@ $(".searchbox").on("focus keyup", function(event) {
         success: function(data) {
           var $list = [];
           $(data).each(function(index, value) {
-            $list.push("<a href='#" + value.word + "'>" + value.word + "</a>");
+            $list.push("<a href='#s=" + value.word + "'>" + value.word + "</a>");
           });
           $(".search-outer").append($list);
         }
@@ -197,8 +197,12 @@ $(".searchbox").on("focus keyup", function(event) {
       */
     } else { //field is blank
       var queries = [];
+      var link;
       $.each(oldQueries, function(index, value) {
-        queries.push("<a href='#" + value + "'class='old'>" + value + "</a>");
+        link = "<a href='#s=" + value + "'class='old'>" + value + "</a>"
+        if ($.inArray(link, queries) === -1) { //if it's not in the list
+          queries.push(link);
+        }
       });
       $(".search-outer").append(queries);
     }
@@ -246,7 +250,7 @@ $(".searchbox").blur(function() {
   switchWordTo($(".searchbox").val());
 });
 window.onhashchange = function() {
-  switchWordTo(window.location.hash.substring(1));
+  switchWordTo(window.location.hash.substring(3));
 };
 $(".relatedWords .button").on("click", function() {
   $(".relatedWords .actions").remove();
@@ -285,5 +289,5 @@ $(".rhymes .button").on("click", function() {
   getRhymingWords(currentQuery, 100);
 });
 $(document).ready(function() {
-  switchWordTo(window.location.hash.substring(1));
+  switchWordTo(window.location.hash.substring(3));
 });

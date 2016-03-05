@@ -123,7 +123,7 @@ textarea {
   @extend %icons;
 }
 main {
-  .row {
+  .results {
     padding-top: 50px;
     @include outer-container(80%);
     .left {
