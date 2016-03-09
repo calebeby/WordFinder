@@ -45,9 +45,10 @@ var getRelatedWords = function(query, limit) {
       });
       if ($list.length > 0) {
         $(".relatedWords .text").html($list)
-        $(".relatedWords").removeAttr("style");
       } else {
         $(".relatedWords .text").html("Can't find related words");
+      }
+      if ($(".searchbox").not(":focus")) {
         $(".relatedWords").removeAttr("style");
       }
     }
@@ -66,9 +67,10 @@ var getSimilarSoundingWords = function(query, limit) {
       });
       if ($list.length > 0) {
         $(".soundsLike .text").html("<p>" + $list.join(", ") + "</p>")
-        $(".soundsLike").removeAttr("style");
       } else {
         $(".soundsLike .text").html("Can't find find similar-sounding words");
+      }
+      if ($(".searchbox").not(":focus")) {
         $(".soundsLike").removeAttr("style");
       }
     }
@@ -86,10 +88,11 @@ var getRhymingWords = function(query, limit) {
         $list.push("<p><a href='#s=" + value.word + "'>" + value.word + "</a></p>");
       });
       if ($list.length > 0) {
-        $(".rhymes .text").html($list)
-        $(".rhymes").removeAttr("style");
+        $(".rhymes .text").html($list);
       } else {
         $(".rhymes .text").html("Can't find find rhyming words")
+      }
+      if ($(".searchbox").not(":focus")) {
         $(".rhymes").removeAttr("style");
       }
     }
@@ -115,9 +118,10 @@ var getDefinition = function(query, limit) {
       if ($list.length > 0) {
         $(".definition .text").html("<ol></ol>");
         $(".definition .text ol").html($list);
-        $(".definition").removeAttr("style");
       } else {
         $(".definition .text").html("Can't find definitions");
+      }
+      if ($(".searchbox").not(":focus")) {
         $(".definition").removeAttr("style");
       }
     }

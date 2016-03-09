@@ -6,12 +6,14 @@ $visual-grid-color: lighten(#FFF0E8, 3%);
 $visual-grid-opacity: 0.4;
 body {
   margin: 0;
+  background-color: #5F9EA0;
 }
 @import "components/waves";
 .relatedWords,
 .rhymes,
 .definition,
 .soundsLike {
+  background-color: #ADD8E6;
   @include span-columns(12);
   @include pad();
   @extend %card;
