@@ -108,7 +108,9 @@ var getDefinition = function(query, limit) {
       $(data.results).each(function(index, value) {
         //get part of speech
         var partOfSpeech = value.part_of_speech;
-        $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.senses[0].definition + "</p></li>");
+        if (value.senses[0].definition != undefined) {
+          $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.senses[0].definition + "</p></li>");
+        }
       });
       if ($list.length > 0) {
         $(".definition .text").html("<ol></ol>");
@@ -147,8 +149,8 @@ $.fn.pressEnter = function(fn) {
 $(".searchbox").focus(function() {
   $(".search-outer").addClass("focus");
   $(this).addClass("selected");
-  $($allCards).css({
-    marginTop: 200,
+  $(".results").css({
+    top: 200,
     opacity: 0,
     visibility: "hidden"
   });
@@ -247,6 +249,7 @@ $(".searchbox").pressEnter(function() {
 });
 $(".searchbox").blur(function() {
   $(".search-outer").removeClass("focus")
+  $(".results").removeAttr("style");
   switchWordTo($(".searchbox").val());
 });
 window.onhashchange = function() {

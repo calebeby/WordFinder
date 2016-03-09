@@ -119,11 +119,12 @@ textarea {
 .highlighter-rouge {
   @extend %highlight;
 }
-.icon {
-  @extend %icons;
-}
+//.icon { @extend %icons; }
 main {
   .results {
+    position: relative;
+    top: 0;
+    @include transition(0.35s ease all);
     padding-top: 50px;
     @include outer-container(80%);
     .left {
