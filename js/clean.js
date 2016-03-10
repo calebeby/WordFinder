@@ -294,7 +294,7 @@ $(".rhymes .button").on("click", function() {
 });
 $(document).keydown(function(e) {
   console.log(e.which);
-  if ((e.which == 115 || e.keyCode == 115 || window.event.keyCode == 115) && $(".searchbox").not(":focus")) {
+  if ((e.which == 83 || e.keyCode == 83 || window.event.keyCode == 83) && $(".searchbox").not(":focus")) {
     e.preventDefault();
     $(".searchbox").focus();
   }
