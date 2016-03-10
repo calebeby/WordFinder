@@ -111,9 +111,7 @@ var getDefinition = function(query, limit) {
       $(data.results).each(function(index, value) {
         //get part of speech
         var partOfSpeech = value.part_of_speech;
-        if (value.senses[0].definition != undefined) {
-          $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.senses[0].definition + "</p></li>");
-        }
+        $list.push("<li><p><em>" + partOfSpeech + "</em> " + value.senses[0].definition + "</p></li>");
       });
       if ($list.length > 0) {
         $(".definition .text").html("<ol></ol>");
@@ -153,8 +151,8 @@ $.fn.pressEnter = function(fn) {
 $(".searchbox").focus(function() {
   $(".search-outer").addClass("focus");
   $(this).addClass("selected");
-  $(".results").css({
-    top: 200,
+  $($allCards).css({
+    marginTop: 200,
     opacity: 0,
     visibility: "hidden"
   });
@@ -253,7 +251,6 @@ $(".searchbox").pressEnter(function() {
 });
 $(".searchbox").blur(function() {
   $(".search-outer").removeClass("focus")
-  $(".results").removeAttr("style");
   switchWordTo($(".searchbox").val());
 });
 window.onhashchange = function() {
@@ -294,6 +291,12 @@ $(".rhymes .button").on("click", function() {
     visibility: "hidden"
   });
   getRhymingWords(currentQuery, 100);
+});
+$(document).keypress(function(e){
+    if (e.which == 103 || e.keyCode == 103 || window.event.keyCode == 103)
+    {
+        alert('g');
+    };
 });
 $(document).ready(function() {
   switchWordTo(window.location.hash.substring(3));
