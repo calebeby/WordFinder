@@ -292,7 +292,7 @@ $(".rhymes .button").on("click", function() {
   });
   getRhymingWords(currentQuery, 100);
 });
-$(document).keypress(function(e) {
+$(document).keyup(function(e) {
   console.log(e.which);
   if ((e.which == 115 || e.keyCode == 115 || window.event.keyCode == 115) && $(".searchbox").not(":focus")) {
     e.preventDefault();
