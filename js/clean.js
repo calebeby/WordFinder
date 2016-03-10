@@ -296,7 +296,11 @@ $(document).keypress(function(e) {
   if ((e.which == 115 || e.keyCode == 115 || window.event.keyCode == 115) && $(".searchbox").not(":focus")) {
     e.preventDefault();
     $(".searchbox").focus();
-  };
+  }
+  if ((e.which == 27 || e.keyCode == 27 || window.event.keyCode == 27) && $(".searchbox").is(":focus")) {
+    e.preventDefault();
+    $(".searchbox").blur();
+  }
 });
 $(document).ready(function() {
   switchWordTo(window.location.hash.substring(3));
