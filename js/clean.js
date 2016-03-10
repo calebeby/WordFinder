@@ -292,11 +292,10 @@ $(".rhymes .button").on("click", function() {
   });
   getRhymingWords(currentQuery, 100);
 });
-$(document).keypress(function(e){
-    if (e.which == 103 || e.keyCode == 103 || window.event.keyCode == 103)
-    {
-        alert('g');
-    };
+$(document).keypress(function(e) {
+  if ((e.which == 83 || e.keyCode == 83 || window.event.keyCode == 83) && $(".searchbox").not(":focus")) {
+    $(".searchbox").focus();
+  };
 });
 $(document).ready(function() {
   switchWordTo(window.location.hash.substring(3));
