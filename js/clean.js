@@ -293,7 +293,6 @@ $(".rhymes .button").on("click", function() {
   getRhymingWords(currentQuery, 100);
 });
 $(document).keydown(function(e) {
-  console.log(e.which);
   if ((e.which == 83 || e.keyCode == 83 || window.event.keyCode == 83) && $(".searchbox").not(":focus")) {
     e.preventDefault();
     $(".searchbox").focus();
