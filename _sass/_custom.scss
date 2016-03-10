@@ -98,6 +98,7 @@ input[type="search"] {
   width: 100%;
   @extend %search-text;
   text-overflow: ellipsis;
+  border-radius: 2px;
   &:focus {
     border-bottom: 1px solid #E6E6E6;
   }
