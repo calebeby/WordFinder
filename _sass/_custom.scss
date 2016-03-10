@@ -117,10 +117,10 @@ input[type="time"],
 input[type="url"],
 input[type="week"],
 textarea {
-  @extend %text-inputs;
+  //@extend %text-inputs;
 }
 .highlighter-rouge {
-  @extend %highlight;
+  //@extend %highlight;
 }
 //.icon { @extend %icons; }
 main {
