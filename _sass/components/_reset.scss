@@ -96,8 +96,8 @@ pre,
 code,
 kbd,
 samp {
-  font-family: monospace,serif;
-  _font-family: 'courier new',monospace;
+  font-family: "Roboto Mono", monospace, serif;
+  _font-family: "Roboto Mono", 'courier new',monospace;
   font-size: 1em;
 }
 pre {
@@ -206,9 +206,9 @@ input[type="radio"] {
 }
 input[type="search"] {
   -webkit-appearance: textfield;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
 }
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button {

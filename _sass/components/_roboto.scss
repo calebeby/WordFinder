@@ -1,4 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500);
+@if $load-roboto {
+    @import url(https://fonts.googleapis.com/css?family=#{$roboto});
+}
 //    by @liabru
 //    http://brm.io/material-design-type
 //    http://www.google.com/design/spec/style/typography.html

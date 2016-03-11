@@ -122,7 +122,11 @@ textarea {
 .highlighter-rouge {
   //@extend %highlight;
 }
-//.icon { @extend %icons; }
+@if $load-icons {
+  .icon {
+    @extend %icons;
+  }
+}
 main {
   .results {
     position: relative;
