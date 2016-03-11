@@ -16,7 +16,7 @@ var switchWordTo = function(query) {
       .split("+").join(" ")
       .split("%20").join(" ");
     if (query !== currentQuery) {
-      $(".searchbox").val(query);
+      $("#searchbox").val(query);
       loadWord(query);
       window.location.hash = "s=" + query;
       oldQueries.unshift(query);
@@ -48,7 +48,7 @@ var getRelatedWords = function(query, limit) {
       } else {
         $(".relatedWords .text").html("Can't find related words");
       }
-      if ($(".searchbox").not(":focus")) {
+      if ($("#searchbox").not(":focus")) {
         $(".relatedWords").removeAttr("style");
       }
     }
@@ -70,7 +70,7 @@ var getSimilarSoundingWords = function(query, limit) {
       } else {
         $(".soundsLike .text").html("Can't find find similar-sounding words");
       }
-      if ($(".searchbox").not(":focus")) {
+      if ($("#searchbox").not(":focus")) {
         $(".soundsLike").removeAttr("style");
       }
     }
@@ -92,7 +92,7 @@ var getRhymingWords = function(query, limit) {
       } else {
         $(".rhymes .text").html("Can't find find rhyming words")
       }
-      if ($(".searchbox").not(":focus")) {
+      if ($("#searchbox").not(":focus")) {
         $(".rhymes").removeAttr("style");
       }
     }
@@ -119,7 +119,7 @@ var getDefinition = function(query, limit) {
       } else {
         $(".definition .text").html("Can't find definitions");
       }
-      if ($(".searchbox").not(":focus")) {
+      if ($("#searchbox").not(":focus")) {
         $(".definition").removeAttr("style");
       }
     }
@@ -148,7 +148,7 @@ $.fn.pressEnter = function(fn) {
     });
   });
 };
-$(".searchbox").focus(function() {
+$("#searchbox").focus(function() {
   $(".search-outer").addClass("focus");
   $(this).addClass("selected");
   $($allCards).css({
@@ -157,22 +157,22 @@ $(".searchbox").focus(function() {
     visibility: "hidden"
   });
 });
-$(".searchbox").on("focus keyup", function(event) {
+$("#searchbox").on("focus keyup", function(event) {
   var code = (event.keyCode || event.which);
   if (!(code == 37 || code == 39 || code == 38 || code == 40)) { //if it's not an arrow key
     selectedSuggestion = 0;
-    var empty = $(".searchbox").val() == "";
+    var empty = $("#searchbox").val() == "";
     $(".search-outer").find("a").remove();
     if (!empty) { //field is not blank
       $.ajax({ //load suggestions
-        url: 'https://api.datamuse.com/sug?s=' + $(".searchbox").val() + "&max=10",
+        url: 'https://api.datamuse.com/sug?s=' + $("#searchbox").val() + "&max=10",
         type: 'get',
         dataType: 'json',
         cache: $cache,
         success: function(data) {
           var $list = [];
           $(data).each(function(index, value) {
-            if (value.word != $(".searchbox").val()) { //if it's not in the search box
+            if (value.word != $("#searchbox").val()) { //if it's not in the search box
               $list.push("<a href='#s=" + value.word + "'>" + value.word + "</a>");
             }
           });
@@ -181,7 +181,7 @@ $(".searchbox").on("focus keyup", function(event) {
       });
       /*
       $.ajax({ //load suggestions
-        url: 'https://api.collinsdictionary.com/api/v1/dictionaries/english/search/didyoumean?start=0&entrynumber=3&page=1&limit=25&q=' + $(".searchbox").val(),
+        url: 'https://api.collinsdictionary.com/api/v1/dictionaries/english/search/didyoumean?start=0&entrynumber=3&page=1&limit=25&q=' + $("#searchbox").val(),
         type: 'get',
         dataType: 'json',
         cache: $cache,
@@ -213,15 +213,15 @@ $(".searchbox").on("focus keyup", function(event) {
   }
 });
 $(".search-outer").on("mousedown", "a", function() {
-  $(".searchbox").val($(this).html()).blur();
+  $("#searchbox").val($(this).html()).blur();
 });
-$(".searchbox").keydown(function(e) {
+$("#searchbox").keydown(function(e) {
   if (event.which == 38 || event.which == 40) {
     event.preventDefault();
     var suggestion = $(".search-outer > * ");
     suggestion.eq(selectedSuggestion).addClass('selected');
     if (selectedSuggestion === 0) {
-      searchBoxValue = $(".searchbox").val();
+      searchBoxValue = $("#searchbox").val();
     }
     if (e.which === 40) { //down arrow
       suggestion.eq(selectedSuggestion).removeClass('selected');
@@ -239,19 +239,19 @@ $(".searchbox").keydown(function(e) {
       suggestion.eq(selectedSuggestion).addClass('selected');
     }
     if ($("a.selected").length > 0) { //one the suggestions is selected
-      $(".searchbox").val($("a.selected").text());
+      $("#searchbox").val($("a.selected").text());
     }
     if (selectedSuggestion === 0) { //searchbox is selected
-      $(".searchbox").val(searchBoxValue); //revert it to original value
+      $("#searchbox").val(searchBoxValue); //revert it to original value
     }
   }
 });
-$(".searchbox").pressEnter(function() {
+$("#searchbox").pressEnter(function() {
   $(this).blur();
 });
-$(".searchbox").blur(function() {
+$("#searchbox").blur(function() {
   $(".search-outer").removeClass("focus")
-  switchWordTo($(".searchbox").val());
+  switchWordTo($("#searchbox").val());
 });
 window.onhashchange = function() {
   switchWordTo(window.location.hash.substring(3));
@@ -293,13 +293,13 @@ $(".rhymes .button").on("click", function() {
   getRhymingWords(currentQuery, 100);
 });
 $(document).keydown(function(e) {
-  if ((e.which == 83 || e.keyCode == 83 || window.event.keyCode == 83) && $(".searchbox").not(":focus")) {
+  if ((e.which == 83 || e.keyCode == 83 || window.event.keyCode == 83) && event.target.id != 'searchbox') {
     e.preventDefault();
-    $(".searchbox").focus();
+    $("#searchbox").focus();
   }
-  if ((e.which == 27 || e.keyCode == 27 || window.event.keyCode == 27) && $(".searchbox").is(":focus")) {
+  if ((e.which == 27 || e.keyCode == 27 || window.event.keyCode == 27) && event.target.id == 'searchbox') {
     e.preventDefault();
-    $(".searchbox").blur();
+    $("#searchbox").blur();
   }
 });
 $(document).ready(function() {
