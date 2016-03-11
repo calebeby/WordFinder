@@ -100,7 +100,7 @@ var getRhymingWords = function(query, limit) {
 }
 var getDefinition = function(query, limit) {
   $.ajax({
-    url: 'https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + query + "&limit=" + limit,
+    url: 'https://api.pearson.com/v2/dictionaries/laad3/entries?headword=' + query + "&limit=" + limit,
     type: 'get',
     dataType: 'json',
     cache: $cache,
