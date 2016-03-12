@@ -127,53 +127,51 @@ textarea {
     @extend %icons;
   }
 }
-main {
-  .results {
-    position: relative;
-    top: 0;
-    @include transition(0.35s ease all);
-    padding-top: 50px;
-    @include outer-container(80%);
-    .left {
-      margin-top: 20px;
-      @include media($desktop) {
-        @include span-columns(3);
-      }
-      @include media($tablet) {
-        @include span-columns(4);
-      }
-      @include media($phone) {
-        @include span-columns(4);
-        @include omega;
-      }
+.results {
+  position: relative;
+  top: 0;
+  @include transition(0.35s ease all);
+  padding-top: 50px;
+  @include outer-container(80%);
+  .left {
+    margin-top: 20px;
+    @include media($desktop) {
+      @include span-columns(3);
     }
-    .center {
-      margin-top: 20px;
-      @include media($desktop) {
-        @include span-columns(6);
-      }
-      @include media($tablet) {
-        @include span-columns(4);
-        @include omega;
-      }
-      @include media($phone) {
-        @include span-columns(4);
-        @include omega;
-      }
+    @include media($tablet) {
+      @include span-columns(4);
     }
-    .right {
-      margin-top: 20px;
-      @include media($desktop) {
-        @include span-columns(3);
-        @include omega;
-      }
-      @include media($tablet) {
-        @include span-columns(4);
-      }
-      @include media($phone) {
-        @include span-columns(4);
-        @include omega;
-      }
+    @include media($phone) {
+      @include span-columns(4);
+      @include omega;
+    }
+  }
+  .center {
+    margin-top: 20px;
+    @include media($desktop) {
+      @include span-columns(6);
+    }
+    @include media($tablet) {
+      @include span-columns(4);
+      @include omega;
+    }
+    @include media($phone) {
+      @include span-columns(4);
+      @include omega;
+    }
+  }
+  .right {
+    margin-top: 20px;
+    @include media($desktop) {
+      @include span-columns(3);
+      @include omega;
+    }
+    @include media($tablet) {
+      @include span-columns(4);
+    }
+    @include media($phone) {
+      @include span-columns(4);
+      @include omega;
     }
   }
 }
