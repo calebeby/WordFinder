@@ -30,6 +30,15 @@ a {
     color: #3BAD43;
   }
 }
+footer {
+  @extend %footer;
+  .footer-top {
+    @extend %purple, %lighten-1;
+  }
+  .footer-bottom {
+    @extend %purple, %accent-2;
+  }
+}
 .definition {
   ol {
     margin-top: 10px;

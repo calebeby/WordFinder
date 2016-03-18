@@ -20,7 +20,6 @@
   min-width: 88px;
   @include transition(all 350ms);
   @extend %button-text;
-  background-color: $color;
   @extend %button-shadow;
   &.flat {
     background-color: inherit;
