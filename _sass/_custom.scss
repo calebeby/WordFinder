@@ -9,17 +9,17 @@ body {
   @extend %teal;
 }
 @import "components/waves";
-.relatedWords,
-.rhymes,
-.definition,
-.soundsLike {
+#relatedWords,
+#rhymes,
+#definition,
+#soundsLike {
   background-color: #ADD8E6;
   @include span-columns(12);
   @include pad();
   @extend %card, %light-blue, %lighten-3;
   @include transition(0.35s ease all);
 }
-.soundsLike {
+#soundsLike {
   margin-top: 20px;
 }
 a {
@@ -33,7 +33,7 @@ a {
 footer {
   @extend %footer, %teal, %darken-2;
 }
-.definition {
+#definition {
   ol {
     margin-top: 10px;
     list-style-type: decimal;
@@ -136,7 +136,7 @@ textarea {
   @include transition(0.35s ease all);
   padding-top: 50px;
   @include outer-container(80%);
-  .left {
+  #left {
     margin-top: 20px;
     @include media($desktop) {
       @include span-columns(3);
@@ -149,7 +149,7 @@ textarea {
       @include omega;
     }
   }
-  .center {
+  #center {
     margin-top: 20px;
     @include media($desktop) {
       @include span-columns(6);
@@ -163,7 +163,7 @@ textarea {
       @include omega;
     }
   }
-  .right {
+  #right {
     margin-top: 20px;
     @include media($desktop) {
       @include span-columns(3);
