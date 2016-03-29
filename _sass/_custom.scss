@@ -8,9 +8,6 @@ body {
   margin: 0;
   @extend %light-blue, %lighten-3;
 }
-footer {
-  @extend %footer;
-}
 @import "components/waves";
 .relatedWords,
 .rhymes,
@@ -34,13 +31,7 @@ a {
   }
 }
 footer {
-  @extend %footer;
-  .footer-top {
-    @extend %purple, %lighten-1;
-  }
-  .footer-bottom {
-    @extend %purple, %accent-2;
-  }
+  @extend %footer, %teal, %darken-2;
 }
 .definition {
   ol {
