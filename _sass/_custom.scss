@@ -8,6 +8,9 @@ body {
   margin: 0;
   @extend %light-blue, %lighten-3;
 }
+footer {
+  @extend %footer;
+}
 @import "components/waves";
 .relatedWords,
 .rhymes,
