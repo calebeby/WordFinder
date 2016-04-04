@@ -18,6 +18,12 @@ body {
   @include pad();
   @extend %card, %light-blue, %lighten-3;
   @include transition(0.35s ease all);
+  ul {
+    padding: 0;
+    li {
+      list-style-type: none;
+    }
+  }
 }
 #soundsLike {
   margin-top: 20px;
