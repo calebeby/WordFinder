@@ -18,6 +18,14 @@ body {
   @include pad();
   @extend %card, %light-blue, %lighten-3;
   @include transition(0.35s ease all);
+  h2 {
+   font-style: italic;
+   font-weight: initial;
+   font-size: 16px;
+  }
+  ol {
+    margin-left: 20px;
+  }
   ul {
     padding: 0;
     li {
@@ -137,11 +145,11 @@ textarea {
   }
 }
 .results {
-  position: relative;
-  top: 0;
   @include transition(0.35s ease all);
   padding-top: 50px;
-  @include outer-container(80%);
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
   #left {
     margin-top: 20px;
     @include media($desktop) {
