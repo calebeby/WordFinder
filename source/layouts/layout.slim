@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    coffee:
+      if not window.location.host.startsWith("127.0.0.1") and window.location.protocol isnt "https:"
+        window.location.protocol = "https";
+    meta charset="utf-8" /
+    meta content="IE=edge" http-equiv="X-UA-Compatible" /
+    meta charset="utf-8" /
+    meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" /
+    title= current_page.data.title
+    link href="//fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" type="text/css" /
+    = stylesheet_link_tag :site
+  body class=page_classes 
+    = yield
+    = javascript_include_tag :all
+
