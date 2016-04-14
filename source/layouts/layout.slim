@@ -2,9 +2,9 @@ doctype html
 html
   head
     meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
-    javascript:
-       if (!(window.location.host.startsWith("127.0.0.1")) && (window.location.protocol != "https:"))
-         window.location.protocol = "https";
+    coffee:
+      if not window.location.host.startsWith("127.0.0.1") and window.location.protocol isnt "https:"
+        window.location.protocol = "https";
     meta charset="utf-8" /
     meta content="IE=edge" http-equiv="X-UA-Compatible" /
     meta charset="utf-8" /

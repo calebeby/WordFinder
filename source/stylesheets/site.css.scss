@@ -1,5 +1,7 @@
-h1 {
-  text-align: center;
-  color: purple; 
-  font-size:  108px;
-}
+@charset "utf-8";
+
+@import "variables";
+@import "bourbon/bourbon";
+@import "neat/neat";
+@import "components/components";
+@import "custom";

@@ -26,8 +26,8 @@ class resultsCard
     @card.id = ID
     @card.innerHTML = "<div class='title'>#{@title}</div>"
   load: (query, limit) ->
-    cardText = @card.getElementsByClassName('text')[0]
-    if cardText?
+    @cardText = @card.getElementsByClassName('text')[0]
+    if @cardText?
       @card.removeChild cardText
     @cardText = document.createElement('div')
     @cardText.classList.add 'text'
@@ -73,7 +73,6 @@ class resultsCard
               cardText.appendChild newdiv
           else
             console.error "Unable to read data from #{URLToLoad}"
-        console.log self.outputFormat
         switch @outputFormat
           when 'ul'
             ul = document.createElement('ul')
@@ -81,7 +80,6 @@ class resultsCard
               li = document.createElement('li')
               li.innerHTML = i
               ul.appendChild li
-              console.log cardText
             cardText.appendChild ul
           when 'list'
             p = document.createElement('p')
