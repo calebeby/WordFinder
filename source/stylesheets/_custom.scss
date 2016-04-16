@@ -19,9 +19,9 @@ body {
   @extend %card, %light-blue, %lighten-3;
   @include transition(0.35s ease all);
   h2 {
-   font-style: italic;
-   font-weight: initial;
-   font-size: 16px;
+    font-style: italic;
+    font-weight: initial;
+    font-size: 16px;
   }
   ol {
     margin-left: 20px;
@@ -44,6 +44,9 @@ a {
     color: #3BAD43;
   }
 }
+.results {
+  position: relative;
+}
 footer {
   @extend %footer, %teal, %darken-2;
 }
@@ -63,7 +66,7 @@ header {
   width: 100%;
   position: fixed;
 }
-.search-outer {
+#search-outer {
   @include transition(0.35s ease all);
   @extend %search-outer;
   left: 0;

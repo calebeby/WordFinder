@@ -8,6 +8,8 @@
 page '/*.xml', layout: false
 page '/*.json', layout: false
 page '/*.txt', layout: false
+activate :asset_hash
+activate :sprockets
 
 # With alternative layout
 # page "/path/to/file.html", layout: :otherlayout
@@ -39,6 +41,7 @@ configure :build do
   # Minify CSS on build
   activate :minify_css
   activate :relative_assets
+  activate :gzip
 
   # Minify Javascript on build
   activate :minify_javascript
