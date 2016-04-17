@@ -64,7 +64,7 @@ class window.resultsCard
             p = document.createElement('p')
             p.innerHTML = results.join(', ')
             cardText.appendChild p
-        window.cardLoaded()
+        cardLoaded()
       error: (xhr) ->
         console.error xhr
       }
