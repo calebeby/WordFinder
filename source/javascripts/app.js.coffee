@@ -2,7 +2,6 @@
 #= require nprogress
 #= require card
 #= require annyang
-#= require upup.min
 #
 # TODO: fix numDoneLoading
 # TODO: When the searchbox is focused, then a suggestion is clicked,
