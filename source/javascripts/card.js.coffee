@@ -1,4 +1,7 @@
-class window.resultsCard
+# 
+# TODO: make something nice appear if there are not results for a card
+#
+class window.ResultsCard
   constructor: (@title, ID, parentID, @outputFormat, @urlString) ->
     @card = document.createElement('div')
     document.getElementById(parentID).appendChild @card
@@ -51,21 +54,21 @@ class window.resultsCard
                 ol.appendChild li
                 i++
               cardText.appendChild newdiv
-          else
-        switch @outputFormat
-          when 'ul'
-            ul = document.createElement('ul')
-            for i in results
-              li = document.createElement('li')
-              li.innerHTML = i
-              ul.appendChild li
-            cardText.appendChild ul
-          when 'list'
-            p = document.createElement('p')
-            p.innerHTML = results.join(', ')
-            cardText.appendChild p
+        if results?
+          switch @outputFormat
+            when 'ul'
+              ul = document.createElement('ul')
+              for i in results
+                li = document.createElement('li')
+                li.innerHTML = i
+                ul.appendChild li
+              cardText.appendChild ul
+            when 'list'
+              p = document.createElement('p')
+              p.innerHTML = results.join(', ')
+              cardText.appendChild p
         cardLoaded()
       error: (xhr) ->
         console.error xhr
-      }
+    }
 

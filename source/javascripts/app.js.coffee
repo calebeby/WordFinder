@@ -1,21 +1,41 @@
 # This is the main app file
 #= require nprogress
 #= require card
+#= require annyang
 #
-# TODO: make .replace use global regex flag, so that it replaces all instances, instead of just one.
+# TODO: fix numDoneLoading
+# TODO: When the searchbox is focused, then a suggestion is clicked,
+#       switchWordTo() is called twice,
+#       first for the suggestions being clicked,
+#       and second for the searchbox being blurred.
+#       This makes the suggestions come before they are done loading.
+# TODO: rhymes don't load when there are multiple words
+#
+# TODO: make .replace use global regex flag, so that it replaces all instances, instead of just onevent.
 #
 # TODO: add comments for nearly every line of code
 #
 # TODO: turn commented code into coffeescript without jQuery
 #
+# TODO: make it so that older browsers get notification to update their browser,
+#     via browser-update.org
+#      or outdatedbrowser.com
+# link to whatbrowser.org
+#      or browsehappy.com
+# TODO: add voice recognition via Annyang! @ talater.com/annyang
+# 
+# TODO: add offline support via upup @ talater.com/upup
 
+#selectedSuggestion is the highlighted item of the suggestions list
+selectedSuggestion = 0
+originalSearchBoxValue = undefined
 currentQuery = undefined
 #oldQueries is an array holding the queries that the user has searched,
 #  and is used for the suggestions box when the search is blank.
 oldQueries = []
 searchBox = document.getElementById 'searchbox'
 #outerSearch is the wrapper for the searchBox and the suggestions
-outerSearch = document.getElementById 'search-outer'
+window.outerSearch = document.getElementById 'search-outer'
 #window.cards is an array of each card.
 window.cards = []
 #numDoneLoading is the number of cards that have finished loading since the last search
@@ -28,7 +48,7 @@ window.loadJSON = (object) ->
   {url, success, error} = object
   #vars is an object that will carry all the variables that will be passed into the child function
   vars = {}
-  vars[item] = object[item] for item of object when item isnt 'url' and item isnt 'success' and item isnt 'error'
+  vars[item] = object[item] for item of object
   xhr = new XMLHttpRequest
   xhr.onreadystatechange = ->
     if xhr.readyState == XMLHttpRequest.DONE
@@ -39,7 +59,7 @@ window.loadJSON = (object) ->
           success JSON.parse(xhr.responseText), vars
       else
         if error
-          #if it's an error, call error() with the data
+          #if it's an error, call error() with the error
           error xhr
   #send the request
   xhr.open 'GET', url, true
@@ -56,20 +76,24 @@ window.cardLoaded = () ->
       NProgress.done()
       showCards()
 
-relatedWords = new resultsCard 'Related Words', 'relatedWords', 'left', 'ul', 'https://api.datamuse.com/words?ml=^query&max=^limit'
-definitions = new resultsCard 'Definitions', 'definition', 'center', 'ol', 'https://api.pearson.com/v2/dictionaries/laad3/entries?headword=^query&limit=^limit'
-soundsLike = new resultsCard 'Similar Sounding Words', 'soundsLike', 'center', 'list', 'https://api.datamuse.com/words?sl=^query&max=^limit'
-rhymes = new resultsCard 'Rhyming Words', 'rhymes', 'right', 'ul', 'https://api.datamuse.com/words?rel_rhy=^query&max=^limit'
+relatedWords = new ResultsCard 'Related Words', 'relatedWords', 'left', 'ul', 'https://api.datamuse.com/words?ml=^query&max=^limit'
+definitions = new ResultsCard 'Definitions', 'definition', 'center', 'ol', 'https://api.pearson.com/v2/dictionaries/laad3/entries?headword=^query&limit=^limit'
+soundsLike = new ResultsCard 'Similar Sounding Words', 'soundsLike', 'center', 'list', 'https://api.datamuse.com/words?sl=^query&max=^limit'
+rhymes = new ResultsCard 'Rhyming Words', 'rhymes', 'right', 'ul', 'https://api.datamuse.com/words?rel_rhy=^query&max=^limit'
 
 hideCards = () ->
+  #fade out the cards and make them slide down
   (document.getElementsByTagName('main'))[0].style.opacity = 0
   (document.getElementsByTagName('main'))[0].style.top = '50px'
 
 showCards = () ->
+  #reset the cards to their original position
   (document.getElementsByTagName('main'))[0].removeAttribute 'style'
-  
+
 #switchWord updates the url, searchbox, and loads the results into the cards
 switchWordTo = (query) ->
+  #reset the number of cards that have loaded
+  numDoneLoading = 0
   #scroll to the top of the page
   window.scrollTo 0, 0
   #if query is not blank
@@ -83,6 +107,8 @@ switchWordTo = (query) ->
       searchBox.value = query
       #make url match query, but with + instead of space
       window.location.hash = 's=' + query.replace(' ', '+')
+      if query in oldQueries
+        oldQueries.splice oldQueries.indexOf(query), 1
       #add query to old queries list
       oldQueries.unshift query
       #load queries via class method
@@ -100,14 +126,6 @@ switchWordTo = (query) ->
     #query is blank, so hide the cards
     hideCards()
 
-#When the searchbox is focused
-searchBox.addEventListener 'focus', ->
-  #add the class `focus` to the search wrapper
-  outerSearch.classList.add 'focus'
-  #make the searchbox the selected item from the suggestions list
-  searchBox.classList.add 'selected'
-  #hide all of the cards
-  hideCards()
 
 #when the searchbox is blurred
 searchBox.addEventListener 'blur', ->
@@ -125,86 +143,144 @@ window.onhashchange = ->
 document.addEventListener 'DOMContentLoaded', ->
   #update the search to whatever comes after s= in the hash
   switchWordTo window.location.hash.substring 3
+  #commands for annyang
+  commands =
+    'search (for) *query (please)': switchWordTo
+    'look up *query (please)': switchWordTo
+  #start annyang
+  annyang.start()
 
-###
-$('#searchbox').on 'focus keyup', (event) ->
+#removes all the suggestions from the list
+clearSuggestions = () ->
+  #remove each element if it exists
+  for element in outerSearch.getElementsByTagName 'a'
+    outerSearch.removeChild element if element?
+  #make sure there are no suggestions left
+  #because ajax may have loaded them right after we got the links
+  if outerSearch.getElementsByTagName('a')[0]?
+    #if there are suggestions left, go back and clear them again
+    clearSuggestions()
+  return
+
+refreshSuggestions = () ->
+  #set the suggestion to the first suggestion, the searchbox
+  selectedSuggestion = 0
+  #update the list of suggestions
+  #unless the searchbox is blank
+  unless searchBox.value == ''
+    #delete all suggestions links
+    clearSuggestions()
+    loadJSON({
+      #get suggestions based on the value of the searchbox
+      url: "https://api.datamuse.com/sug?s=#{searchBox.value}&max=10"
+      word: searchBox.value
+      success: (suggestions, vars) ->
+        #make it so the word is accessible within this function
+        @word = vars.word
+        #delete all suggestions links again
+        #  in case of something loaded right before
+        clearSuggestions()
+        #move suggestions array of objects to a new temp. variable
+        _suggestions = suggestions
+        #make a new array with only the words
+        suggestions = []
+        suggestions.push @word
+        suggestions.push suggestionsObject.word for suggestionsObject in _suggestions
+        #each suggestion
+        for suggestion in suggestions
+          #if it's different from what's in the searchbox
+          #  and it applies to the current query
+          if suggestion isnt searchBox.value and suggestions[0] == searchBox.value
+            #create link
+            newLink = document.createElement 'a'
+            #add href
+            newLink.setAttribute 'href', "#s='#{suggestion}'"
+            #add text
+            newLink.innerText = suggestion
+            #append to outerSearch
+            outerSearch.appendChild newLink
+      })
+  else
+    #field is blank
+    for oldQuery in oldQueries
+      #create link
+      newLink = document.createElement 'a'
+      #add href
+      newLink.setAttribute 'href', "#s='#{oldQuery}'"
+      #add text
+      newLink.innerText = oldQuery
+      #add class so that it will have the history icon
+      #  next to it
+      newLink.classList.add 'old'
+      #append to outerSearch
+      outerSearch.appendChild newLink
+
+searchBox.addEventListener 'keyup', (event) ->
   code = event.keyCode or event.which
+  #if it's not an arrow key
   if !(code == 37 or code == 39 or code == 38 or code == 40)
-    #if it's not an arrow key
-    selectedSuggestion = 0
-    empty = $('#searchbox').val() == ''
-    $('.search-outer').find('a').remove()
-    if !empty
-      #field is not blank
-      $.ajax
-        url: 'https://api.datamuse.com/sug?s=' + $('#searchbox').val() + '&max=10'
-        type: 'get'
-        dataType: 'json'
-        cache: $cache
-        success: (data) ->
-          $list = []
-          $(data).each (index, value) ->
-            if value.word != $('#searchbox').val()
-              #if it's not in the search box
-              $list.push '<a href=\'#s=' + value.word + '\'>' + value.word + '</a>'
-            return
-          $('.search-outer').append $list
-          return
-    else
-      #field is blank
-      queries = []
-      link = undefined
-      $.each oldQueries, (index, value) ->
-        link = '<a href=\'#s=' + value + '\'class=\'old\'>' + value + '</a>'
-        if $.inArray(link, queries) == -1
-          #if it's not in the list
-          queries.push link
-        return
-      $('.search-outer').append queries
+    refreshSuggestions()
+
+#When the searchbox is focused
+searchBox.addEventListener 'focus', ->
+  #add the class `focus` to the search wrapper
+  outerSearch.classList.add 'focus'
+  #make the searchbox the selected item from the suggestions list
+  searchBox.classList.add 'selected'
+  #hide all of the cards
+  hideCards()
+  refreshSuggestions()
+#when the outer search is clicked
+outerSearch.addEventListener 'mousedown', (event) ->
+  #if it was a link that was clicked
+  if event.target.tagName is 'A'
+    #set the searchbox to the text of the clicked link
+    searchBox.value = event.target.innerText
   return
-$('.search-outer').on 'mousedown', 'a', ->
-  $('#searchbox').val($(this).html()).blur()
-  return
-$('#searchbox').keydown (e) ->
-  if event.which == 38 or event.which == 40
+searchbox.addEventListener 'keydown', (event) ->
+  #if the enter or esc key is pressed
+  if event.which is 13 or event.which is 27
     event.preventDefault()
-    suggestion = $('.search-outer > * ')
-    suggestion.eq(selectedSuggestion).addClass 'selected'
+    searchBox.blur()
+  #if it's an up or down arrow
+  if event.which == 38 or event.which == 40
+    #don't move the cursor
+    event.preventDefault()
+    #the suggestions are all the children of outerSearch
+    suggestions = document.querySelectorAll('#search-outer > * ')
+    #make the currently selected suggestion no longer selected
+    suggestions[selectedSuggestion].classList.remove 'selected'
+    #if the searchBox is selected,
     if selectedSuggestion == 0
-      searchBoxValue = $('#searchbox').val()
-    if e.which == 40
+      #save its current value to a variable
+      originalSearchBoxValue = searchBox.value
+    if event.which == 40
       #down arrow
-      suggestion.eq(selectedSuggestion).removeClass 'selected'
       selectedSuggestion++
-      if !suggestion.eq(selectedSuggestion).length
+      if !suggestions[selectedSuggestion]?
         #none are found at the given index
         selectedSuggestion = 0
-      suggestion.eq(selectedSuggestion).addClass 'selected'
-    else if e.which == 38
+      suggestions[selectedSuggestion].classList.add 'selected'
+    else if event.which == 38
       #up arrow
-      suggestion.eq(selectedSuggestion).removeClass 'selected'
       selectedSuggestion--
-      if !suggestion.eq(selectedSuggestion).length
+      if !suggestions[selectedSuggestion]?
         #none are found at the given index
-        selectedSuggestion = suggestion.length
-      suggestion.eq(selectedSuggestion).addClass 'selected'
-    if $('a.selected').length > 0
-      #one the suggestions is selected
-      $('#searchbox').val $('a.selected').text()
+        #  so set it to the last item
+        selectedSuggestion = suggestions.length - 1
+      suggestions[selectedSuggestion].classList.add 'selected'
+    #if one the suggestions is selected
+    if document.querySelector('a.selected')?
+      #update the search text to the current suggestion
+      searchbox.value = document.querySelector('a.selected').innerText
+    #if searchbox is selected
     if selectedSuggestion == 0
-      #searchbox is selected
-      $('#searchbox').val searchBoxValue
       #revert it to original value
-  return
-$('#searchbox').pressEnter ->
-  $(this).blur()
-  return
-$(document).keydown (e) ->
-  if (e.which == 83 or e.keyCode == 83 or window.event.keyCode == 83) and event.target.id != 'searchbox'
-    e.preventDefault()
-    $('#searchbox').focus()
-  if (e.which == 27 or e.keyCode == 27 or window.event.keyCode == 27) and event.target.id == 'searchbox'
-    e.preventDefault()
-    $('#searchbox').blur()
-  return
-###
+      searchbox.value = originalSearchBoxValue
+
+#if the `s` key is pressed
+document.addEventListener 'keydown', (event) ->
+  if (event.which == 83 or event.keyCode == 83 or window.event.keyCode == 83) and event.target.id != 'searchbox'
+    event.preventDefault()
+    #focus the searchbox
+    searchbox.focus()

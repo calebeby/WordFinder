@@ -8,7 +8,6 @@ body {
   margin: 0;
   @extend %teal;
 }
-@import "components/waves";
 #relatedWords,
 #rhymes,
 #definition,
@@ -81,6 +80,17 @@ header {
   max-width: 100%;
   z-index: 8;
   @include elevation(2);
+  .mic {
+    background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20style%3D%22width%3A24px%3Bheight%3A24px%22%20viewBox%3D%220%200%2024%2024%22%3E%0A%20%20%20%20%3Cpath%20fill%3D%22%23888888%22%20d%3D%22M12%2C2A3%2C3%200%200%2C1%2015%2C5V11A3%2C3%200%200%2C1%2012%2C14A3%2C3%200%200%2C1%209%2C11V5A3%2C3%200%200%2C1%2012%2C2M19%2C11C19%2C14.53%2016.39%2C17.44%2013%2C17.93V21H11V17.93C7.61%2C17.44%205%2C14.53%205%2C11H7A5%2C5%200%200%2C0%2012%2C16A5%2C5%200%200%2C0%2017%2C11H19Z%22%20%2F%3E%0A%3C%2Fsvg%3E");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-origin: padding-box;
+    background-position: 10px 50%;
+    width: 40px;
+        height: 25px;
+            margin-top: -31px;
+                float: right;
+  }
   &.focus {
     z-index: 8;
     width: 80%;
@@ -89,7 +99,7 @@ header {
       display: block;
       opacity: 100;
       visibility: visible;
-      &.selected {
+      &.selected, &:hover {
         background-color: #E6E6E6;
       }
       &.old {
