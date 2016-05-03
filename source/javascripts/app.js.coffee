@@ -2,6 +2,7 @@
 #= require nprogress
 #= require card
 #= require annyang
+#= require upup.min
 #
 # TODO: fix numDoneLoading
 # TODO: When the searchbox is focused, then a suggestion is clicked,
@@ -9,13 +10,6 @@
 #       first for the suggestions being clicked,
 #       and second for the searchbox being blurred.
 #       This makes the suggestions come before they are done loading.
-# TODO: rhymes don't load when there are multiple words
-#
-# TODO: make .replace use global regex flag, so that it replaces all instances, instead of just onevent.
-#
-# TODO: add comments for nearly every line of code
-#
-# TODO: turn commented code into coffeescript without jQuery
 #
 # TODO: make it so that older browsers get notification to update their browser,
 #     via browser-update.org
@@ -99,20 +93,20 @@ switchWordTo = (query) ->
   #if query is not blank
   if query isnt ''
     #replace + and %20 with space
-    query = query.replace('+', ' ').replace('%20', ' ')
+    query = query.replace(/\+/g, ' ').replace(/%20/g, ' ')
     if query isnt currentQuery
       #start loading bar
       NProgress.start()
       #make searchbox match query
       searchBox.value = query
       #make url match query, but with + instead of space
-      window.location.hash = 's=' + query.replace(' ', '+')
+      window.location.hash = 's=' + query.replace(/ /g, '+')
       if query in oldQueries
         oldQueries.splice oldQueries.indexOf(query), 1
       #add query to old queries list
       oldQueries.unshift query
       #load queries via class method
-      rhymes.load query, 10
+      rhymes.load query.split(' ').pop(), 10
       soundsLike.load query, 10
       relatedWords.load query, 10
       definitions.load query, 10
@@ -141,6 +135,9 @@ window.onhashchange = ->
 
 #when the DOM is loaded
 document.addEventListener 'DOMContentLoaded', ->
+  UpUp.start({
+    'content-url': 'offline.html'
+  })
   #update the search to whatever comes after s= in the hash
   switchWordTo window.location.hash.substring 3
   #commands for annyang
@@ -247,7 +244,7 @@ searchbox.addEventListener 'keydown', (event) ->
     #don't move the cursor
     event.preventDefault()
     #the suggestions are all the children of outerSearch
-    suggestions = document.querySelectorAll('#search-outer > * ')
+    suggestions = document.querySelectorAll('#search-outer > input, #search-outer > a')
     #make the currently selected suggestion no longer selected
     suggestions[selectedSuggestion].classList.remove 'selected'
     #if the searchBox is selected,
