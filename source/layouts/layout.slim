@@ -13,15 +13,14 @@ html
   body class=page_classes 
 
     = yield
-    = yield_content :js
     javascript:
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        for(let registration of registrations) {
-          registration.unregister()
-        }
-      })
-//    coffee:
-      UpUp.start({
-        'content-url': 'offline.html'
-        'assets': ['/stylesheets/site.css', '/offline_plain.svg', '/stylesheets/offline.css']
-      })
+      var $buoop = {c:2};
+      function $buo_f(){
+      var e = document.createElement("script");
+      e.src = "//browser-update.org/update.min.js";
+      document.body.appendChild(e);
+      };
+      try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
+      catch(e){window.attachEvent("onload", $buo_f)}
+
+    = yield_content :js

@@ -18,6 +18,10 @@
 # TODO: add voice recognition via Annyang! @ talater.com/annyang
 # 
 # TODO: add offline support via upup @ talater.com/upup
+# UPDATE: offline failed; service worker is buggy
+#   and non-CORS requests don't work.
+#   I don't think I will play with it any more
+#   until it is more commonly used
 
 #selectedSuggestion is the highlighted item of the suggestions list
 selectedSuggestion = 0
