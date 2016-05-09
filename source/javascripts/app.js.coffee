@@ -131,8 +131,6 @@ window.onhashchange = ->
   #update the search to whatever comes after s= in the hash
   switchWordTo window.location.hash.substring 3
 
-talk = (word) ->
-  console.log word
 #when the DOM is loaded
 document.addEventListener 'DOMContentLoaded', ->
   #update the search to whatever comes after s= in the hash
@@ -145,7 +143,8 @@ document.addEventListener 'DOMContentLoaded', ->
   if (annyang)
     console.log 'annyang is here'
     commands =
-      '*word': talk
+      'the *word': (word) ->
+        console.log "the #{word}"
     annyang.addCommands commands
     annyang.start()
 
