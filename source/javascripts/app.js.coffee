@@ -205,7 +205,7 @@ refreshSuggestions = () ->
       #add href
       newLink.setAttribute 'href', "#s='#{oldQuery}'"
       #add text
-      newLink.innerText = oldQuery
+      newLink.innerHTML = oldQuery
       #add class so that it will have the history icon
       #  next to it
       newLink.classList.add 'old'
@@ -232,7 +232,7 @@ outerSearch.addEventListener 'mousedown', (event) ->
   #if it was a link that was clicked
   if event.target.tagName is 'A'
     #set the searchbox to the text of the clicked link
-    searchBox.value = event.target.innerText
+    searchBox.value = event.target.innerHTML
   return
 searchbox.addEventListener 'keydown', (event) ->
   #if the enter or esc key is pressed
@@ -269,7 +269,7 @@ searchbox.addEventListener 'keydown', (event) ->
     #if one the suggestions is selected
     if document.querySelector('a.selected')?
       #update the search text to the current suggestion
-      searchbox.value = document.querySelector('a.selected').innerText
+      searchbox.value = document.querySelector('a.selected').innerHTML
     #if searchbox is selected
     if selectedSuggestion == 0
       #revert it to original value
