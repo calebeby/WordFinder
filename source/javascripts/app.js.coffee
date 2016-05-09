@@ -143,8 +143,8 @@ document.addEventListener 'DOMContentLoaded', ->
   if (annyang)
     console.log 'annyang is here'
     commands =
-      'the *word': (word) ->
-        console.log "the #{word}"
+      '*word': (word) ->
+        console.log "#{word}"
     annyang.addCommands commands
     annyang.start()
 
