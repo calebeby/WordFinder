@@ -4,4 +4,8 @@
   }
 
 }).call(this);
-</script><meta charset="utf-8" /><meta content="IE=edge" http-equiv="X-UA-Compatible" /><meta charset="utf-8" /><meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" /><title></title><link href="stylesheets/site.css" rel="stylesheet" /></head><body class="offline"><h1>offline.</h1><script src="upup.min.js"></script><script src="javascripts/app.js"></script></body></html>
+</script><link href="stylesheets/offline.css" rel="stylesheet" /><meta charset="utf-8" /><meta content="IE=edge" http-equiv="X-UA-Compatible" /><meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" /><title></title></head><body class="offline"><div class="content"><img src="offline_plain.svg" /><h1>No connection</h1><a href="">Retry</a></div><script src="upup.min.js"></script><script>navigator.serviceWorker.getRegistrations().then(function(registrations) {
+  for(let registration of registrations) {
+    registration.unregister()
+  }
+})</script></body></html>
