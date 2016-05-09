@@ -193,7 +193,7 @@ refreshSuggestions = () ->
             #add href
             newLink.setAttribute 'href', "#s='#{suggestion}'"
             #add text
-            newLink.innerText = suggestion
+            newLink.innerHTML= suggestion
             #append to outerSearch
             outerSearch.appendChild newLink
       })
