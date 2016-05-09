@@ -1,1 +1,9 @@
-h1 offline.
+- content_for :styles do
+  = stylesheet_link_tag :offline
+- content_for :js do
+  = javascript_include_tag "upup.min"
+
+.content
+  img src="/offline_plain.svg"
+  h1 No connection
+  a href='' Retry

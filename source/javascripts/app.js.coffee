@@ -134,9 +134,6 @@ window.onhashchange = ->
 
 #when the DOM is loaded
 document.addEventListener 'DOMContentLoaded', ->
-  UpUp.start({
-    'content-url': 'offline.html'
-  })
   #update the search to whatever comes after s= in the hash
   switchWordTo window.location.hash.substring 3
   #commands for annyang

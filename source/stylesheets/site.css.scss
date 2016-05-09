@@ -3,8 +3,223 @@
 */
 @charset "utf-8";
 
-@import "variables";
+$load-icons: false;
+$load-roboto: false;
+$roboto: "Roboto+Mono|Roboto:400,500";
+$color: green;
+
 @import "bourbon/bourbon";
 @import "neat/neat";
 @import "sol/sol";
-@import "custom";
+
+$phone: new-breakpoint(max-width 480px, $total-columns: 4);
+$tablet: new-breakpoint(min-width 480px max-width 840px, $total-columns: 8);
+$desktop: new-breakpoint(min-width 840px, $total-columns: 12);
+$visual-grid: true !global;
+$visual-grid-color: lighten(#FFF0E8, 3%);
+$visual-grid-opacity: 0.4;
+body {
+  margin: 0;
+  background-color: $teal-500;
+}
+#relatedWords,
+#rhymes,
+#definition,
+#soundsLike {
+  background-color: #ADD8E6;
+  @include span-columns(12);
+  @include pad();
+  @extend %card;
+  background-color: $light-blue-200;
+  @include transition(0.35s ease all);
+  h2 {
+    font-style: italic;
+    font-weight: initial;
+    font-size: 16px;
+  }
+  ol {
+    margin-left: 20px;
+  }
+  ul {
+    padding: 0;
+    li {
+      list-style-type: none;
+    }
+  }
+}
+#soundsLike {
+  margin-top: 20px;
+}
+a {
+  cursor: pointer;
+  color: #03a9f4;
+  text-decoration: none;
+  &:visited {
+    color: #3BAD43;
+  }
+}
+.results {
+  position: relative;
+}
+footer {
+  @extend %footer;
+  background-color: $teal-700;
+}
+#definition {
+  ol {
+    margin-top: 10px;
+    list-style-type: decimal;
+    padding-left: 16px;
+  }
+}
+#{$all-buttons},
+a.button {
+  @extend %buttons;
+}
+header {
+  z-index: 10;
+  width: 100%;
+  position: fixed;
+}
+#search-outer {
+  @include transition(0.35s ease all);
+  @extend %search-outer;
+  left: 0;
+  right: 0;
+  width: 39%;
+  min-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  display: block;
+  margin-top: 10px;
+  max-width: 100%;
+  z-index: 8;
+  @include elevation(2);
+  .mic {
+    background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20style%3D%22width%3A24px%3Bheight%3A24px%22%20viewBox%3D%220%200%2024%2024%22%3E%0A%20%20%20%20%3Cpath%20fill%3D%22%23888888%22%20d%3D%22M12%2C2A3%2C3%200%200%2C1%2015%2C5V11A3%2C3%200%200%2C1%2012%2C14A3%2C3%200%200%2C1%209%2C11V5A3%2C3%200%200%2C1%2012%2C2M19%2C11C19%2C14.53%2016.39%2C17.44%2013%2C17.93V21H11V17.93C7.61%2C17.44%205%2C14.53%205%2C11H7A5%2C5%200%200%2C0%2012%2C16A5%2C5%200%200%2C0%2017%2C11H19Z%22%20%2F%3E%0A%3C%2Fsvg%3E");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-origin: padding-box;
+    background-position: 10px 50%;
+    width: 40px;
+        height: 25px;
+            margin-top: -31px;
+                float: right;
+  }
+  &.focus {
+    z-index: 8;
+    width: 80%;
+    @include elevation(3);
+    a {
+      display: block;
+      opacity: 100;
+      visibility: visible;
+      &.selected, &:hover {
+        background-color: #E6E6E6;
+      }
+      &.old {
+        background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20version%3D%221.1%22%20%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%0A%20%20%20%3Cpath%20fill%3D%22%23888888%22%20d%3D%22M11%2C7V12.11L15.71%2C14.9L16.5%2C13.62L12.5%2C11.25V7M12.5%2C2C8.97%2C2%205.91%2C3.92%204.27%2C6.77L2%2C4.5V11H8.5L5.75%2C8.25C6.96%2C5.73%209.5%2C4%2012.5%2C4A7.5%2C7.5%200%200%2C1%2020%2C11.5A7.5%2C7.5%200%200%2C1%2012.5%2C19C9.23%2C19%206.47%2C16.91%205.44%2C14H3.34C4.44%2C18.03%208.11%2C21%2012.5%2C21C17.74%2C21%2022%2C16.75%2022%2C11.5A9.5%2C9.5%200%200%2C0%2012.5%2C2Z%22%20%2F%3E%0A%3C%2Fsvg%3E");
+        background-size: 22px 22px;
+        background-repeat: no-repeat;
+        background-origin: padding-box;
+        background-position: 10px 50%;
+      }
+    }
+  }
+  a {
+    font-size: 80%;
+    color: #212121;
+    padding: 15px;
+    padding-left: 40px;
+    display: none;
+    @include transition(0.35s ease all);
+    visibility: hidden;
+    opacity: 0;
+    text-overflow: ellipsis;
+    z-index: 9;
+  }
+}
+input[type="search"] {
+  width: 100%;
+  @extend %search-text;
+  text-overflow: ellipsis;
+  border-radius: 2px;
+  &:focus {
+    border-bottom: 1px solid #E6E6E6;
+  }
+}
+input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+textarea {
+  //@extend %text-inputs;
+}
+.highlighter-rouge {
+  //@extend %highlight;
+}
+@if $load-icons {
+  .icon {
+    @extend %icons;
+  }
+}
+.results {
+  @include transition(0.35s ease all);
+  padding-top: 50px;
+  top: 0;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  #left {
+    margin-top: 20px;
+    @include media($desktop) {
+      @include span-columns(3);
+    }
+    @include media($tablet) {
+      @include span-columns(4);
+    }
+    @include media($phone) {
+      @include span-columns(4);
+      @include omega;
+    }
+  }
+  #center {
+    margin-top: 20px;
+    @include media($desktop) {
+      @include span-columns(6);
+    }
+    @include media($tablet) {
+      @include span-columns(4);
+      @include omega;
+    }
+    @include media($phone) {
+      @include span-columns(4);
+      @include omega;
+    }
+  }
+  #right {
+    margin-top: 20px;
+    @include media($desktop) {
+      @include span-columns(3);
+      @include omega;
+    }
+    @include media($tablet) {
+      @include span-columns(4);
+    }
+    @include media($phone) {
+      @include span-columns(4);
+      @include omega;
+    }
+  }
+}
+

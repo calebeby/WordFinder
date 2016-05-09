@@ -5,14 +5,23 @@ html
     coffee:
       if not window.location.host.startsWith("127.0.0.1") and window.location.protocol isnt "https:"
         window.location.protocol = "https";
+    = yield_content :styles
     meta charset="utf-8" /
     meta content="IE=edge" http-equiv="X-UA-Compatible" /
-    meta charset="utf-8" /
     meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" /
     title= current_page.data.title
-    = stylesheet_link_tag :site
   body class=page_classes 
-    = yield
-    = javascript_include_tag "upup.min"
-    = javascript_include_tag :app
 
+    = yield
+    = yield_content :js
+    javascript:
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+          registration.unregister()
+        }
+      })
+//    coffee:
+      UpUp.start({
+        'content-url': 'offline.html'
+        'assets': ['/stylesheets/site.css', '/offline_plain.svg', '/stylesheets/offline.css']
+      })

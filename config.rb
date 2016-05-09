@@ -8,7 +8,7 @@
 page '/*.xml', layout: false
 page '/*.json', layout: false
 page '/*.txt', layout: false
-activate :asset_hash
+activate :asset_hash, ignore: '/offline_plain.svg'
 activate :sprockets
 
 # With alternative layout
@@ -22,7 +22,7 @@ activate :sprockets
 
 # Reload the browser automatically whenever files change
 configure :development do
-  activate :livereload
+#  activate :livereload
 end
 
 ###
