@@ -10,11 +10,6 @@
 #       and second for the searchbox being blurred.
 #       This makes the suggestions come before they are done loading.
 #
-# TODO: make it so that older browsers get notification to update their browser,
-#     via browser-update.org
-#      or outdatedbrowser.com
-# link to whatbrowser.org
-#      or browsehappy.com
 # TODO: add voice recognition via Annyang! @ talater.com/annyang
 # 
 # TODO: add offline support via upup @ talater.com/upup
@@ -136,16 +131,23 @@ window.onhashchange = ->
   #update the search to whatever comes after s= in the hash
   switchWordTo window.location.hash.substring 3
 
+talk = (word) ->
+  console.log word
 #when the DOM is loaded
 document.addEventListener 'DOMContentLoaded', ->
   #update the search to whatever comes after s= in the hash
   switchWordTo window.location.hash.substring 3
   #commands for annyang
-  commands =
-    'search (for) *query (please)': switchWordTo
-    'look up *query (please)': switchWordTo
+  #commands =
+  #  'search (for) *query (please)': switchWordTo
+  #  'look up *query (please)': switchWordTo
   #start annyang
-  annyang.start()
+  if (annyang)
+    console.log 'annyang is here'
+    commands =
+      '*word': talk
+    annyang.addCommands commands
+    annyang.start()
 
 #removes all the suggestions from the list
 clearSuggestions = () ->
