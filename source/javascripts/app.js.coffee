@@ -138,14 +138,15 @@ document.addEventListener 'DOMContentLoaded', ->
   #update the search to whatever comes after s= in the hash
   switchWordTo window.location.hash.substring 3
   #commands for annyang
-  #commands =
-  #  'search (for) *query (please)': switchWordTo
-  #  'look up *query (please)': switchWordTo
   #start annyang
   if (annyang)
-    console.log 'annyang is here'
     commands =
-      '*word': talk
+      'search (for) *query (please)': switchWordTo
+      'look up *query (please)': switchWordTo
+      'ok wordfinder': () ->
+        searchbox.focus()
+      'ok word': () ->
+        searchbox.focus()
     annyang.addCommands commands
     annyang.start()
 
