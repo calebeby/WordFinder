@@ -147,7 +147,6 @@ document.addEventListener 'DOMContentLoaded', ->
         searchbox.focus()
     annyang.addCommands commands
     annyang.start()
-    annyang.debug()
 
 #removes all the suggestions from the list
 clearSuggestions = () ->
