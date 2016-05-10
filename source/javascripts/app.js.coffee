@@ -145,8 +145,6 @@ document.addEventListener 'DOMContentLoaded', ->
       'look up *query (please)': switchWordTo
       'ok wordfinder': () ->
         searchbox.focus()
-      'ok word': () ->
-        searchbox.focus()
     annyang.addCommands commands
     annyang.start()
 
