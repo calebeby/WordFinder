@@ -11,6 +11,13 @@
 #       This makes the suggestions come before they are done loading.
 #
 # TODO: add voice recognition via Annyang! @ talater.com/annyang
+# UPDATE: done with simple implementation
+#   now what I need to do is add functionality
+#   to the microphone icon
+# 
+# TODO: add about link in the footer
+#
+# TODO: add results from google box
 # 
 # TODO: add offline support via upup @ talater.com/upup
 # UPDATE: offline failed; service worker is buggy

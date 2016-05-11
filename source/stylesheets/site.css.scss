@@ -28,10 +28,15 @@ body {
 #soundsLike {
   background-color: #ADD8E6;
   @include span-columns(12);
-  @include pad();
   @extend %card;
   background-color: $light-blue-200;
   @include transition(0.35s ease all);
+  .title {
+    @extend %title;
+  }
+  .text {
+    @extend %text;
+  }
   h2 {
     font-style: italic;
     font-weight: initial;
@@ -39,6 +44,9 @@ body {
   }
   ol {
     margin-left: 20px;
+    li {
+      display: list-item;
+    } 
   }
   ul {
     padding: 0;
@@ -74,7 +82,7 @@ footer {
 }
 #{$all-buttons},
 a.button {
-  @extend %buttons;
+  @extend %button;
 }
 header {
   z-index: 10;
