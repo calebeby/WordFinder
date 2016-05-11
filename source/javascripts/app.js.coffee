@@ -18,6 +18,7 @@
 # TODO: add about link in the footer
 #
 # TODO: add results from google box
+# UPDATE: began working on this
 # 
 # TODO: add offline support via upup @ talater.com/upup
 # UPDATE: offline failed; service worker is buggy
