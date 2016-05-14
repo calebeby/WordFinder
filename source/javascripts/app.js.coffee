@@ -14,12 +14,12 @@
 # UPDATE: done with simple implementation
 #   now what I need to do is add functionality
 #   to the microphone icon
-# 
+#
 # TODO: add about link in the footer
 #
 # TODO: add results from google box
 # UPDATE: began working on this
-# 
+#
 # TODO: add offline support via upup @ talater.com/upup
 # UPDATE: offline failed; service worker is buggy
 #   and non-CORS requests don't work.
@@ -38,15 +38,18 @@ searchBox = document.getElementById 'searchbox'
 window.outerSearch = document.getElementById 'search-outer'
 #window.cards is an array of each card.
 window.cards = []
-#numDoneLoading is the number of cards that have finished loading since the last search
+#numDoneLoading is the number of cards
+#  that have finished loading since the last search
 numDoneLoading = 0
 
 #loadJSON loads a JSON object from the url property of the object parameter
 #  and then calls the success() from the object with the parameter data
 window.loadJSON = (object) ->
-  #sets url, success, and error based on their corresponding properties in object
+  #sets url, success, and error
+  #  based on their corresponding properties in object
   {url, success, error} = object
-  #vars is an object that will carry all the variables that will be passed into the child function
+  #vars is an object that will carry all the variables
+  #  that will be passed into the child function
   vars = {}
   vars[item] = object[item] for item of object
   xhr = new XMLHttpRequest
@@ -68,13 +71,13 @@ window.loadJSON = (object) ->
 #this is called once every time a card finishes loading and displaying its output
 #this will change the progress bar, and show the cards if it is the last one to load.
 window.cardLoaded = () ->
-    numDoneLoading++
-    NProgress.set(numDoneLoading/window.cards.length)
-    #if this is the last card to finish
-    if numDoneLoading = cards.length
-      #end the progress bar and show the cards.
-      NProgress.done()
-      showCards()
+  numDoneLoading++
+  NProgress.set(numDoneLoading/window.cards.length)
+  #if this is the last card to finish
+  if numDoneLoading = cards.length
+    #end the progress bar and show the cards.
+    NProgress.done()
+    showCards()
 
 relatedWords = new ResultsCard 'Related Words', 'relatedWords', 'left', 'ul', 'https://api.datamuse.com/words?ml=^query&max=^limit'
 definitions = new ResultsCard 'Definitions', 'definition', 'center', 'ol', 'https://api.pearson.com/v2/dictionaries/laad3/entries?headword=^query&limit=^limit'

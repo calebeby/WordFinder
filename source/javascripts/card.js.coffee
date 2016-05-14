@@ -62,7 +62,14 @@ class window.ResultsCard
               loadJSON {
                 url: "https://www.googleapis.com/customsearch/v1?q=define%20#{query}&cx=016826248069333016431%3Axeckywfblsg&key=AIzaSyBnIMWEr80v00Fgq60OxByQJ5cMlj8auM8"
                 success: (data) ->
+                  title = document.createElement('h2')
+                  title.innerHTML = "Google results for #{query}"
+                  cardText.appendChild title
                   console.log data.items
+                  for item in data.items
+                    newLink = "<a href='#{item.link}'>#{item.title}</a>"
+                    cardText.innerHTML += newLink
+                    return
               }
         if results?
           switch @outputFormat

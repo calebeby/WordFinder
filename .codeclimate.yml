@@ -1,0 +1,32 @@
+---
+engines:
+  bundler-audit:
+    enabled: true
+  csslint:
+    enabled: true
+  coffeelint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - ruby
+      - coffeescript
+      - javascript
+      - scss
+  eslint:
+    enabled: false
+  fixme:
+    enabled: false
+  rubocop:
+    enabled: false
+ratings:
+  paths:
+  - Gemfile.lock
+  - "**.css"
+  - "**.coffee"
+  - "**.rb"
+  - "**.scss"
+exclude_paths: 
+  - "/build"
+  - "**.js"
