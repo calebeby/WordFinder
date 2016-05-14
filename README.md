@@ -8,3 +8,4 @@ A Dictionary, thesaurus, rhyme dictionary, and more.
 [![Issues closed in](http://issuestats.com/github/calebeby/WordFinder/badge/issue?style=flat)](http://issuestats.com/github/calebeby/WordFinder)
 [![Pull requests closed in](http://issuestats.com/github/calebeby/WordFinder/badge/pr?style=flat)](http://issuestats.com/github/calebeby/WordFinder)
 [![GitHub issues](https://img.shields.io/github/issues/calebeby/WordFinder.svg)](https://github.com/calebeby/WordFinder/issues)
+[![ZenHub.io](https://img.shields.io/badge/supercharged%20by-zenhub.io-3f4d9c.svg)](https://www.zenhub.io/)
