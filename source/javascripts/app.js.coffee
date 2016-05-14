@@ -2,29 +2,6 @@
 #= require nprogress
 #= require card
 #= require annyang
-#
-# TODO: fix numDoneLoading
-# TODO: When the searchbox is focused, then a suggestion is clicked,
-#       switchWordTo() is called twice,
-#       first for the suggestions being clicked,
-#       and second for the searchbox being blurred.
-#       This makes the suggestions come before they are done loading.
-#
-# TODO: add voice recognition via Annyang! @ talater.com/annyang
-# UPDATE: done with simple implementation
-#   now what I need to do is add functionality
-#   to the microphone icon
-#
-# TODO: add about link in the footer
-#
-# TODO: add results from google box
-# UPDATE: began working on this
-#
-# TODO: add offline support via upup @ talater.com/upup
-# UPDATE: offline failed; service worker is buggy
-#   and non-CORS requests don't work.
-#   I don't think I will play with it any more
-#   until it is more commonly used
 
 #selectedSuggestion is the highlighted item of the suggestions list
 selectedSuggestion = 0
