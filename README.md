@@ -1,4 +1,4 @@
 # WordFinder
 A Dictionary, thesaurus, rhyme dictionary, and more.
 
-![Fork](https://img.shields.io/github/forks/badges/shields.svg?style=social&label=Fork&maxAge=2592000)
+[![GitHub forks](https://img.shields.io/github/forks/calebeby/WordFinder.svg!style=social)](https://github.com/calebeby/WordFinder/network)
