@@ -1,6 +1,3 @@
-# 
-# TODO: make something nice appear if there are not results for a card
-#
 class window.ResultsCard
   constructor: (@title, ID, parentID, @outputFormat, @urlString) ->
     @card = document.createElement('div')
