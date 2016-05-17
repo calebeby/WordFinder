@@ -13,5 +13,5 @@ gem 'middleman', '>= 4.0.0'
 gem 'middleman-livereload'
 gem 'slim'
 gem 'middleman-gh-pages'
-gem "middleman-sprockets"
+gem "middleman-sprockets", git: 'https://github.com/middleman/middleman-sprockets.git'
 
