@@ -18,6 +18,7 @@ class window.ResultsCard
       query: query
       url: @URLToLoad
       card: @card
+      calledFrom: 'card'
       cardText: @cardText
       outputFormat: @outputFormat
       success: (data, vars) ->
@@ -47,9 +48,9 @@ class window.ResultsCard
                 newdiv.appendChild title
                 ol = document.createElement('ol')
                 newdiv.appendChild ol
-                console.log results[partofSpeech]
+                #console.log results[partofSpeech]
                 for i in results[partofSpeech]
-                  console.log i
+                  #console.log i
                   li = document.createElement('li')
                   li.innerHTML = i
                   ol.appendChild li
@@ -62,7 +63,7 @@ class window.ResultsCard
                   title = document.createElement('h2')
                   title.innerHTML = "Google results for #{query}"
                   cardText.appendChild title
-                  console.log data.items
+                  #console.log data.items
                   for item in data.items
                     newLink = "<a href='#{item.link}'>#{item.title}</a>"
                     cardText.innerHTML += newLink
@@ -81,8 +82,7 @@ class window.ResultsCard
               p = document.createElement('p')
               p.innerHTML = results.join(', ')
               cardText.appendChild p
-        cardLoaded()
       error: (xhr) ->
         console.error xhr
-    }
+      }
 
