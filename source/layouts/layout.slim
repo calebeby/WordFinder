@@ -3,7 +3,7 @@ html
   head
     meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
     coffee:
-      if not window.location.host.startsWith("127.0.0.1") and window.location.protocol isnt "https:"
+      if not window.location.host.startsWith("127.0.0.1") and window.location.protocol isnt "https:" and not window.location.host.startsWith("192.168")
         window.location.protocol = "https";
     = yield_content :styles
     meta charset="utf-8" /

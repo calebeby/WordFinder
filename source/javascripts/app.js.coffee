@@ -39,13 +39,11 @@ window.loadJSON = (object) ->
           success JSON.parse(xhr.responseText), vars
           if calledFrom is 'card'
             numDoneLoading++
-            console.log numDoneLoading
             NProgress.set(numDoneLoading/window.cards.length)
             #if this is the last card to finish
             if numDoneLoading >= cards.length
               #end the progress bar and show the cards.
               NProgress.done()
-              console.log 'about to show cards'
               (document.getElementsByTagName('main'))[0].removeAttribute 'style'
       else
         if error
@@ -82,28 +80,23 @@ switchWordTo = (query) ->
   if query isnt ''
     #replace + and %20 with space
     query = query.replace(/\+/g, ' ').replace(/%20/g, ' ')
-    if query isnt currentQuery
-      #start loading bar
-      NProgress.start()
-      #make searchbox match query
-      searchBox.value = query
-      #make url match query, but with + instead of space
-      window.location.hash = 's=' + query.replace(/ /g, '+')
-      if query in oldQueries
-        oldQueries.splice oldQueries.indexOf(query), 1
-      #add query to old queries list
-      oldQueries.unshift query
-      #load queries via class method
-      rhymes.load query.split(' ').pop(), 10
-      soundsLike.load query, 10
-      relatedWords.load query, 10
-      definitions.load query, 10
-      #update currentQuery variable
-      currentQuery = query
-    else
-      #query is the same as it was last time, so show the cards
-      #instead of loading them all over again
-      showCards()
+    #start loading bar
+    NProgress.start()
+    #make searchbox match query
+    searchBox.value = query
+    #make url match query, but with + instead of space
+    window.location.hash = 's=' + query.replace(/ /g, '+')
+    if query in oldQueries
+      oldQueries.splice oldQueries.indexOf(query), 1
+    #add query to old queries list
+    oldQueries.unshift query
+    #load queries via class method
+    rhymes.load query.split(' ').pop(), 10
+    soundsLike.load query, 10
+    relatedWords.load query, 10
+    definitions.load query, 10
+    #update currentQuery variable
+    currentQuery = query
   else
     #query is blank, so hide the cards
     hideCards()

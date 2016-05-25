@@ -63,11 +63,13 @@ class window.ResultsCard
                   title = document.createElement('h2')
                   title.innerHTML = "Google results for #{query}"
                   cardText.appendChild title
-                  #console.log data.items
-                  for item in data.items
-                    newLink = "<a href='#{item.link}'>#{item.title}</a>"
-                    cardText.innerHTML += newLink
-                    return
+                  console.log data.items
+                  if data.items?
+                    for item in data.items
+                      newLink = "<a href='#{item.link}' target='_blank'>#{item.title}</a>"
+                      cardText.innerHTML += newLink
+                      return
+                  else cardText.innerHTML = 'Can\'t find results'
               }
         if results?
           switch @outputFormat
@@ -82,6 +84,7 @@ class window.ResultsCard
               p = document.createElement('p')
               p.innerHTML = results.join(', ')
               cardText.appendChild p
+        else cardText.innerHTML = 'Can\'t find results'
       error: (xhr) ->
         console.error xhr
       }
