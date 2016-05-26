@@ -11,7 +11,6 @@
 /.sass-cache
 /.cache
 /build
-/source/images/*
 # Ignore .DS_store file
 .DS_Store
 *.swp
