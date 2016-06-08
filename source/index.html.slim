@@ -12,4 +12,32 @@ main.results
   #right
 footer
   .footer-bottom
-    a href="https://www.changetip.com/tipme/calebeby" target="_blank"  Tip Me
+    a href="https://www.changetip.com/tipme/calebeby" target="_blank"  Tip Me 
+    a data-dialog="about" About
+    |  Hosted by 
+    a href='https://pages.github.com' Github Pages
+#about
+  .title About WordFinder
+  .content
+    markdown:
+      WordFinder is a dictionary, thesaurus, rhyme dictionary, and near-rhyme dictionary.
+      It was created and is maintained by [@calebeby](https://github.com/calebeby).
+      
+      WordFinder's results are powered by the [Datamuse Api](http://www.datamuse.com/api/).
+      It follows Google's [Material Design Guidelines](https://material.google.com/)
+      by using [@calebeby](https://github.com/calebeby)'s own SCSS framework, [Sol](https://github.com/calebeby/sol).
+      WordFinder uses [SCSS](http://sass-lang.com/), [Slim](http://slim-lang.com/), and [Coffeescript](http://coffeescript.org/)
+      for code that is easier to read and write.
+      These are compiled with [Middleman](https://middlemanapp.com/), a static site generator.
+      The source code for WordFinder is [available on GitHub](https://github.com/calebeby/WordFinder)
+      
+  .actions
+    a.button href='https://twitter.com/intent/tweet?url=https%3A%2F%2Fcalebeby.github.io%2FWordFinder%2F&text=Check%20out%20WordFinder!' target='_blank'
+      | Tweet 
+      i.twitter.icon
+    a.button href='https://github.com/calebeby/WordFinder/issues/new' target='_blank'
+      | Request a Feature 
+      i.lightbulb.icon
+    a.button href='https://github.com/calebeby/WordFinder/issues/new' target='_blank'
+      | Report a Bug 
+      i.bug.icon

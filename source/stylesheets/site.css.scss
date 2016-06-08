@@ -3,9 +3,9 @@
 */
 @charset "utf-8";
 
-$load-icons: false;
-$load-roboto: false;
-$roboto: "Roboto+Mono|Roboto:400,500";
+$load-icons: true;
+$load-roboto: true;
+$roboto: "Roboto:400,500,600";
 $color: green;
 
 @import "bourbon/bourbon";
@@ -21,6 +21,24 @@ $visual-grid-opacity: 0.4;
 body {
   margin: 0;
   background-color: $teal-500;
+}
+[data-tooltip] {
+  @extend %tooltip;
+}
+#about {
+  @extend %dialog;
+  .title {
+    @extend %dialog-title;
+  }
+  .content {
+    @extend %dialog-content;
+    p {
+      padding-top: 10px;
+    }
+  }
+  .actions {
+    @extend %dialog-actions;
+  }
 }
 #relatedWords,
 #rhymes,
@@ -80,7 +98,7 @@ footer {
     padding-left: 16px;
   }
 }
-#{$all-buttons},
+//#{$all-buttons},
 a.button {
   @extend %button;
 }

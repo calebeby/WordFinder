@@ -2,6 +2,7 @@
 #= require nprogress
 #= require card
 #= require annyang
+#= require dialog
 
 #selectedSuggestion is the highlighted item of the suggestions list
 selectedSuggestion = 0

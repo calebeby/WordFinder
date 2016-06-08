@@ -10,7 +10,8 @@ page '/*.json', layout: false
 page '/*.txt', layout: false
 activate :asset_hash, ignore: '/offline_plain.svg'
 activate :sprockets
-
+set :markdown_engine, :redcarpet
+set :markdown, parse_block_html: true
 # With alternative layout
 # page "/path/to/file.html", layout: :otherlayout
 

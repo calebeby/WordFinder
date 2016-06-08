@@ -13,6 +13,7 @@ html
   body class=page_classes 
 
     = yield
+    = yield_content :js
     javascript:
       var $buoop = {c:2};
       function $buo_f(){
@@ -22,4 +23,3 @@ html
       };
       try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
       catch(e){window.attachEvent("onload", $buo_f)}
-    = yield_content :js

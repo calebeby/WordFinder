@@ -12,6 +12,7 @@ gem 'tzinfo-data', platforms: [:mswin, :mingw, :jruby]
 gem 'middleman', '>= 4.0.0'
 gem 'middleman-livereload'
 gem 'slim'
+gem 'redcarpet'
 gem 'middleman-gh-pages'
 gem "middleman-sprockets", git: 'https://github.com/middleman/middleman-sprockets.git'
 
