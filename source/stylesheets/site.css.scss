@@ -20,7 +20,26 @@ $visual-grid-color: lighten(#FFF0E8, 3%);
 $visual-grid-opacity: 0.4;
 body {
   margin: 0;
-  background-color: $teal-500;
+  background-color: $grey-100;
+}
+#logo {
+  font-size: 20px;
+  font-weight: 400;
+  color: white;
+  float: left;
+  z-index: 5;
+  line-height: 64px;
+  margin-left: 20px;
+  transition: opacity 0.3s ease;
+}
+
+#search-outer.focus + #logo {
+  opacity: 0;
+}
+@include media($phone) {
+  #logo {
+    display: none;
+  }
 }
 [data-tooltip] {
   @extend %tooltip;
@@ -44,10 +63,9 @@ body {
 #rhymes,
 #definition,
 #soundsLike {
-  background-color: #ADD8E6;
   @include span-columns(12);
   @extend %card;
-  background-color: $light-blue-200;
+  background-color: white;
   @include transition(0.35s ease all);
   .title {
     @extend %title;
@@ -85,11 +103,12 @@ a {
   }
 }
 .results {
+  margin: 20px 0;
   position: relative;
 }
 footer {
   @extend %footer;
-  background-color: $teal-700;
+  background-color: $light-blue-500;
 }
 #definition {
   ol {
@@ -103,25 +122,28 @@ a.button {
   @extend %button;
 }
 header {
-  z-index: 10;
+  @include elevation(4);
+  height: 64px;
+  background-color: $light-blue-500;
   width: 100%;
   position: fixed;
 }
 #search-outer {
   @include transition(0.35s ease all);
   @extend %search-outer;
-  left: 0;
-  right: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   width: 39%;
-  min-width: 200px;
+  min-width: 250px;
   margin-left: auto;
   margin-right: auto;
   background-color: white;
   display: block;
-  margin-top: 10px;
+  margin-top: 12px;
   max-width: 100%;
   z-index: 8;
-  @include elevation(2);
+  @include elevation(0);
   .mic {
     background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20style%3D%22width%3A24px%3Bheight%3A24px%22%20viewBox%3D%220%200%2024%2024%22%3E%0A%20%20%20%20%3Cpath%20fill%3D%22%23888888%22%20d%3D%22M12%2C2A3%2C3%200%200%2C1%2015%2C5V11A3%2C3%200%200%2C1%2012%2C14A3%2C3%200%200%2C1%209%2C11V5A3%2C3%200%200%2C1%2012%2C2M19%2C11C19%2C14.53%2016.39%2C17.44%2013%2C17.93V21H11V17.93C7.61%2C17.44%205%2C14.53%205%2C11H7A5%2C5%200%200%2C0%2012%2C16A5%2C5%200%200%2C0%2017%2C11H19Z%22%20%2F%3E%0A%3C%2Fsvg%3E");
     background-size: 25px 25px;
@@ -134,7 +156,6 @@ header {
     float: right;
   }
   &.focus {
-    z-index: 8;
     width: 80%;
     @include elevation(3);
     a {
@@ -171,7 +192,9 @@ input[type="search"] {
   @extend %search-text;
   text-overflow: ellipsis;
   border-radius: 2px;
+  background-color: $light-blue-300;
   &:focus {
+    background-color: white;
     border-bottom: 1px solid #E6E6E6;
   }
 }
