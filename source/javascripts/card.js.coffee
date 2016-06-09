@@ -48,9 +48,7 @@ class window.ResultsCard
                 newdiv.appendChild title
                 ol = document.createElement('ol')
                 newdiv.appendChild ol
-                #console.log results[partofSpeech]
                 for i in results[partofSpeech]
-                  #console.log i
                   li = document.createElement('li')
                   li.innerHTML = i
                   ol.appendChild li
@@ -63,7 +61,6 @@ class window.ResultsCard
                   title = document.createElement('h2')
                   title.innerHTML = "Google results for #{query}"
                   cardText.appendChild title
-                  console.log data.items
                   if data.items?
                     for item in data.items
                       newLink = "<a href='#{item.link}' target='_blank'>#{item.title}</a>"
